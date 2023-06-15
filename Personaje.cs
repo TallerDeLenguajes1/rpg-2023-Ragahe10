@@ -45,7 +45,67 @@ public class Personaje{
 }
 
 public class FabricaDePersonaje{
-    Personaje CrearPersonaje(){
+    public string[] Nombres = {
+        "Carlos",
+        "Pepe",
+        "Juan",
+        "Colo",
+        "Jose",
+        "Rama",
+        "Guillo",
+        "Gaby",
+        "Luciano"
+    };
+    public string[] Apodos = {
+        "Tronco",
+        "Oso",
+        "Pato",
+        "La Cabra",
+        "Enano",
+        "Fideo",
+        "La Pulga",
+        "Buitre",
+        "Neblina"
+    };
+    public Personaje CrearPersonaje(){
+        Personaje nuevo = new Personaje();
+        Random valor = new Random();
+        int anio = valor.Next(1723,2023);
+        int mes = valor.Next(1,13);
+        int dia;
+        switch (mes)
+        {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                dia = valor.Next(1,32);
+                break;
+            case 2:
+                dia = valor.Next(1,29);
+                break;
+            default:
+                dia = valor.Next(1,31);
+                break;
+        }
+
+        //Datos
+        nuevo.Nombre = Nombres[valor.Next(0,9)];
+        nuevo.Apodo = Apodos[valor.Next(0,9)];
+        nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
+        //Caracteristicas
         
+        nuevo.Velocidad = valor.Next(1,11);
+        nuevo.Destreza = valor.Next(1,6);
+        nuevo.Fuerza = valor.Next(1,11);
+        nuevo.Nivel = valor.Next(1,11);
+        nuevo.Armadura = valor.Next(1,11);
+        nuevo.Salud = 100;
+
+        nuevo.FechaDeNacimiento = ;
+        return  nuevo;
     }
 }
