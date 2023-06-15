@@ -54,7 +54,8 @@ public class FabricaDePersonaje{
         "Rama",
         "Guillo",
         "Gaby",
-        "Luciano"
+        "Luciano",
+        "Sergio"
     };
     public string[] Apodos = {
         "Tronco",
@@ -65,7 +66,8 @@ public class FabricaDePersonaje{
         "Fideo",
         "La Pulga",
         "Buitre",
-        "Neblina"
+        "Neblina",
+        "El Profe"
     };
     public Personaje CrearPersonaje(){
         Personaje nuevo = new Personaje();
@@ -112,7 +114,7 @@ public class FabricaDePersonaje{
     {
         DateTime fechaActual = DateTime.Now;
         int edad = fechaActual.Year - fechaNacimiento.Year;
-        
+
         if (fechaActual.Month < fechaNacimiento.Month || (fechaActual.Month == fechaNacimiento.Month && fechaActual.Day < fechaNacimiento.Day))
         {
             edad--;
