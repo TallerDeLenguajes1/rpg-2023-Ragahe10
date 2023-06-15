@@ -1,4 +1,6 @@
 namespace EspacioPersonaje;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class Personaje{
     //ATRIBUTOS
@@ -28,20 +30,6 @@ public class Personaje{
     public int Nivel { get => nivel; set => nivel = value; }
     public int Armadura { get => armadura; set => armadura = value; }
     public int Salud { get => salud; set => salud = value; }
-    //Constructor
-    // public Personaje (string tipo, string nombre, string apodo, DateTime Fnac, int edad, int vel, int dezt, int fuerza, int niv, int armad, int salud){
-    //     Tipo = tipo;
-    //     Nombre = nombre;
-    //     Apodo = apodo;
-    //     FechaDeNacimiento = Fnac;
-    //     Edad = edad;
-    //     Velocidad = vel;
-    //     Destreza =dezt;
-    //     Fuerza = fuerza;
-    //     Nivel = niv;
-    //     Armadura = armad;
-    //     Salud = salud;
-    // }
 }
 
 public class FabricaDePersonaje{
@@ -58,15 +46,15 @@ public class FabricaDePersonaje{
         "Sergio"
     };
     public string[] Apodos = {
-        "Tronco",
-        "Oso",
-        "Pato",
+        "EL Tronco",
+        "EL Oso",
+        "EL Pato",
         "La Cabra",
-        "Enano",
-        "Fideo",
+        "EL Enano",
+        "EL Fideo",
         "La Pulga",
-        "Buitre",
-        "Neblina",
+        "EL Buitre",
+        "La Neblina",
         "El Profe"
     };
     public Personaje CrearPersonaje(){
@@ -119,8 +107,31 @@ public class FabricaDePersonaje{
         {
             edad--;
         }
-
         return edad;
     }
 }
 
+public class PersonajesJson{
+    //serializacion
+    public void GuardarPersonajes(List<Personaje> lista, string Nombre){
+        string json ;
+        //var config = new JsonSerializerOptions { WriteIndented = true };
+        // foreach (var personaje in lista){
+        //     json = json +"\n\r"+JsonSerializer.Serialize(personaje/*, config*/);
+        // }
+        json = JsonSerializer.Serialize(lista);
+        File.WriteAllText(Nombre+".json",json);
+    }
+    //deserializacion
+    public List<Personaje>? LeerPersonajes(string nombreArch){
+        List<Personaje>? listPer = null;
+        if(Existe(nombreArch)){
+            string json = File.ReadAllText(nombreArch);
+            listPer = JsonSerializer.Deserialize<List<Personaje>>(json);
+        }
+        return listPer;
+    }
+    public bool Existe(string nombreArch){
+        return (File.Exists(nombreArch));
+    }
+}
