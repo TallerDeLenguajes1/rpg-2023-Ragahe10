@@ -29,9 +29,23 @@ public class Personaje{
     public int Armadura { get => armadura; set => armadura = value; }
     public int Salud { get => salud; set => salud = value; }
     //Constructor
-    
+    // public Personaje (string tipo, string nombre, string apodo, DateTime Fnac, int edad, int vel, int dezt, int fuerza, int niv, int armad, int salud){
+    //     Tipo = tipo;
+    //     Nombre = nombre;
+    //     Apodo = apodo;
+    //     FechaDeNacimiento = Fnac;
+    //     Edad = edad;
+    //     Velocidad = vel;
+    //     Destreza =dezt;
+    //     Fuerza = fuerza;
+    //     Nivel = niv;
+    //     Armadura = armad;
+    //     Salud = salud;
+    // }
 }
 
 public class FabricaDePersonaje{
-
+    Personaje CrearPersonaje(){
+        
+    }
 }
