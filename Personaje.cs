@@ -96,6 +96,7 @@ public class FabricaDePersonaje{
         nuevo.Nombre = Nombres[valor.Next(0,9)];
         nuevo.Apodo = Apodos[valor.Next(0,9)];
         nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
+        nuevo.Edad = CalcularEdad(nuevo.FechaDeNacimiento);
         //Caracteristicas
         
         nuevo.Velocidad = valor.Next(1,11);
@@ -105,7 +106,19 @@ public class FabricaDePersonaje{
         nuevo.Armadura = valor.Next(1,11);
         nuevo.Salud = 100;
 
-        nuevo.FechaDeNacimiento = ;
         return  nuevo;
     }
+    public  int CalcularEdad(DateTime fechaNacimiento)
+    {
+        DateTime fechaActual = DateTime.Now;
+        int edad = fechaActual.Year - fechaNacimiento.Year;
+        
+        if (fechaActual.Month < fechaNacimiento.Month || (fechaActual.Month == fechaNacimiento.Month && fechaActual.Day < fechaNacimiento.Day))
+        {
+            edad--;
+        }
+
+        return edad;
+    }
 }
+
