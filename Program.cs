@@ -11,5 +11,6 @@ var fp = new FabricaDePersonaje();
 for (int i = 0; i < 10; i++){
     listaDePersonajes.Add(fp.CrearPersonaje());
 }
+
 PersonajesJson pjson = new PersonajesJson();
 pjson.GuardarPersonajes(listaDePersonajes, "Personajes");
