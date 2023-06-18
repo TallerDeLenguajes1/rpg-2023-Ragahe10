@@ -57,6 +57,24 @@ public class FabricaDePersonaje{
         "La Neblina",
         "El Profe"
     };
+    public string[] Tipos ={
+        "Orco Luchador",
+        "Orco Hechicero",
+        "Orco Arquero",
+        "Orco Sanador",
+        "Humano Luchador",
+        "Humano Hechicero",
+        "Humano Arquero",
+        "Humano Sanador",
+        "Elfo Luchador",
+        "Elfo Hechicero",
+        "Elfo Arquero",
+        "Elfo Sanador",
+        "Luchador Muerto",
+        "Hechicero Muerto",
+        "Arquero Muerto",
+        "Sanador Muerto"
+    };
     public Personaje CrearPersonaje(){
         Personaje nuevo = new Personaje();
         Random valor = new Random();
@@ -85,6 +103,7 @@ public class FabricaDePersonaje{
         //Datos
         nuevo.Nombre = Nombres[valor.Next(0,9)];
         nuevo.Apodo = Apodos[valor.Next(0,9)];
+        nuevo.Tipo = Tipos[valor.Next(0,16)];
         nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
         nuevo.Edad = CalcularEdad(nuevo.FechaDeNacimiento);
         //Caracteristicas
