@@ -129,14 +129,14 @@ public class FabricaDePersonaje{
                 nuevo.Armadura = (float)valor.Next(1,11);
                 nuevo.Salud = (float)valor.Next(90,101);
                 break;
-            case "Muerto Vieviente":
+            case "Muerto Viviente":
                 nuevo.Nombre = Nombres[valor.Next(45,60)];
                 nuevo.Apodo = Apodos[valor.Next(45,60)];
                 nuevo.Velocidad = (float)valor.Next(1,9);
                 nuevo.Destreza = (float)valor.Next(1,6);
                 nuevo.Fuerza = (float)valor.Next(1,11);
                 nuevo.Armadura = (float)valor.Next(1,11);
-                nuevo.Salud += (float)valor.Next(5,20);
+                nuevo.Salud += (float)valor.Next(10,31);
                 break;
         }
         //incremento los campos segun el rol
@@ -148,11 +148,11 @@ public class FabricaDePersonaje{
                 break;
             case "Arquero":
                 nuevo.Velocidad +=(float)2;
-                nuevo.Armadura++;
+                nuevo.Armadura +=(float)1;
                 break;
             case "Mago":
                 nuevo.Fuerza += (float)2;
-                nuevo.Velocidad++;
+                nuevo.Velocidad +=(float)1;
                 break;
         }
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
