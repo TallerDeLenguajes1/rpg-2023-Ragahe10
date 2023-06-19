@@ -17,18 +17,7 @@ listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
 if(listaDePersonajes != null){
     System.Console.WriteLine("---------PERSONAJES-------");
     foreach (var personaje in listaDePersonajes){
-        System.Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~");
-        System.Console.WriteLine(" - NOMBRE: "+ personaje.Nombre);
-        System.Console.WriteLine(" - APODO: "+ personaje.Apodo);
-        System.Console.WriteLine(" - TIPO: "+ personaje.Tipo);
-        System.Console.WriteLine(" - FECHA DE NACIMIENTO: "+ personaje.FechaDeNacimiento);
-        System.Console.WriteLine(" - EDAD: "+ personaje.Edad);
-        System.Console.WriteLine(" - NIVEL: "+ personaje.Nivel);
-        System.Console.WriteLine(" - SALUD: "+ personaje.Salud);
-        System.Console.WriteLine(" - VELOCIDAD: "+ personaje.Velocidad);
-        System.Console.WriteLine(" - DESTREZA: "+ personaje.Destreza);
-        System.Console.WriteLine(" - FUERZA: "+ personaje.Fuerza);
-        System.Console.WriteLine(" - ARMADURA: "+ personaje.Armadura);
+       personaje.MostrarPersonaje();
     }
     System.Console.WriteLine("--------------------------");
 }else{

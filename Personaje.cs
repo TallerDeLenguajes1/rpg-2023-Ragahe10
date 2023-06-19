@@ -30,6 +30,20 @@ public class Personaje{
     public int Nivel { get => nivel; set => nivel = value; }
     public float Armadura { get => armadura; set => armadura = value; }
     public float Salud { get => salud; set => salud = value; }
+
+    public void MostrarPersonaje(){
+        System.Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.Console.WriteLine(" - PERSONAJE: "+ Nombre +", "+ Apodo);
+        System.Console.WriteLine(" - LVL: "+ Nivel + "| TIPO: "+ Tipo);
+        System.Console.WriteLine(" - FECHA DE NACIMIENTO: "+ FechaDeNacimiento.ToShortDateString());
+        System.Console.WriteLine(" - EDAD: "+ Edad);
+        System.Console.WriteLine(" - CARACTERISTICAS:");
+        System.Console.WriteLine("    -> SALUD: "+ Salud);
+        System.Console.WriteLine("    -> VELOCIDAD: "+ Velocidad);
+        System.Console.WriteLine("    -> DESTREZA: "+ Destreza);
+        System.Console.WriteLine("    -> FUERZA: "+ Fuerza);
+        System.Console.WriteLine("    -> ARMADURA: "+ Armadura);
+    }
 }
 
 public class FabricaDePersonaje{
@@ -157,8 +171,8 @@ public class FabricaDePersonaje{
         }
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
         //Incremento los campos segun el nivel
-        float campo = 0.25f;
-        nuevo.Nivel = valor.Next(1,11);
+        float campo = 0.5f;
+        nuevo.Nivel = valor.Next(1,6);
         campo = ((nuevo.Nivel)-1)*campo;
         nuevo.Velocidad += campo;
         nuevo.Destreza += campo;
