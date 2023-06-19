@@ -10,7 +10,7 @@ PersonajesJson pjson = new PersonajesJson();
 
 if(!(pjson.Existe("Personajes.json"))){
     for (int i = 0; i < 16; i++){
-    listaDePersonajes.Add(fp.CrearPersonaje());
+        listaDePersonajes.Add(fp.CrearPersonaje());
     }
     pjson.GuardarPersonajes(listaDePersonajes, "Personajes");
 }
@@ -21,6 +21,14 @@ if(listaDePersonajes != null){
        personaje.MostrarPersonaje();
     }
     System.Console.WriteLine("--------------------------");
+    var combate = new Combates();
+    // listaDePersonajes = combate.Sorteo(listaDePersonajes);
+    // System.Console.WriteLine("---------PERSONAJES-------");
+    // foreach (var personaje in listaDePersonajes){
+    //    personaje.MostrarPersonaje();
+    // }
+    // System.Console.WriteLine("--------------------------");
+
 }else{
     System.Console.WriteLine("no hay personajes");
 }

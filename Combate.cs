@@ -13,5 +13,7 @@ public class Combates{
         }
         return Comb;
     }
-    
+    // public Personaje Combate(Personaje p1, Personaje p2){
+
+    // }
 }

@@ -168,7 +168,7 @@ public class FabricaDePersonaje{
         }
         nuevo.Energia = 10;
         //incremento los campos segun el rol
-        string rol = roles[valor.Next(0,3)];
+        string rol = roles[valor.Next(0,4)];
         switch (rol){
             case "Caballero":
                 nuevo.Armadura +=(float)2;
@@ -191,14 +191,14 @@ public class FabricaDePersonaje{
         }
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
         //Incremento los campos segun el nivel
-        float campo = 0.25f;
+        // float campo = 0.25f;
         nuevo.Nivel = valor.Next(1,7);
-        campo = ((nuevo.Nivel)-1)*campo;
-        nuevo.Velocidad += campo;
-        nuevo.Destreza += campo;
-        nuevo.Fuerza += campo;
-        nuevo.Armadura += campo;
-        nuevo.Salud += (float)(((nuevo.Nivel)-1)*5);
+        // campo = ((nuevo.Nivel)-1)*campo;
+        // nuevo.Velocidad += campo;
+        // nuevo.Destreza += campo;
+        // nuevo.Fuerza += campo;
+        // nuevo.Armadura += campo;
+        // nuevo.Salud += (float)(((nuevo.Nivel)-1)*5);
 
         
         nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
@@ -207,6 +207,7 @@ public class FabricaDePersonaje{
 
         return  nuevo;
     }
+    
     public  int CalcularEdad(DateTime fechaNacimiento)
     {
         DateTime fechaActual = DateTime.Now;
