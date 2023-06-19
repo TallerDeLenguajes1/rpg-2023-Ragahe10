@@ -11,12 +11,15 @@ public class Personaje{
     private DateTime fechaDeNacimiento;
     private int edad;
     //CARACTERISTICAS
+    private string? especial;
     private float velocidad;
     private float destreza;
     private float fuerza;
     private int nivel;
     private float armadura;
     private float salud;
+    private int energia;
+
     //Propiedades de datos
     public string? Tipo { get => tipo; set => tipo = value; }
     public string? Nombre { get => nombre; set => nombre = value; }
@@ -24,12 +27,14 @@ public class Personaje{
     public DateTime FechaDeNacimiento { get => fechaDeNacimiento; set => fechaDeNacimiento = value; }
     public int Edad { get => edad; set => edad = value; }
     //Propiedades de Caracteristicas
+    public string? Especial { get => especial; set => especial = value; }
     public float Velocidad { get => velocidad; set => velocidad = value; }
     public float Destreza { get => destreza; set => destreza = value; }
     public float Fuerza { get => fuerza; set => fuerza = value; }
     public int Nivel { get => nivel; set => nivel = value; }
     public float Armadura { get => armadura; set => armadura = value; }
     public float Salud { get => salud; set => salud = value; }
+    public int Energia { get => energia; set => energia = value; }
 
     public void MostrarPersonaje(){
         System.Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -38,6 +43,7 @@ public class Personaje{
         System.Console.WriteLine(" - FECHA DE NACIMIENTO: "+ FechaDeNacimiento.ToShortDateString());
         System.Console.WriteLine(" - EDAD: "+ Edad);
         System.Console.WriteLine(" - CARACTERISTICAS:");
+        System.Console.WriteLine("    -> H.ESPECIAL: "+ Especial);
         System.Console.WriteLine("    -> SALUD: "+ Salud);
         System.Console.WriteLine("    -> VELOCIDAD: "+ Velocidad);
         System.Console.WriteLine("    -> DESTREZA: "+ Destreza);
@@ -90,11 +96,18 @@ public class FabricaDePersonaje{
     public string[] roles ={
         "Caballero", "Arquero", "Mago", "Común"
     };
+    public string[] Especiales ={
+        "Embiste heroico",   "Escudo protector",
+        "Lluvia de flechas", "Flecha anestésica",
+        "Bola de fuego",     "Frío envolvente",
+        "Golpe frenético",   "Vendas"
+    };
+
     public Personaje CrearPersonaje(){
         Personaje nuevo = new Personaje();
         Random valor = new Random();
         nuevo.Tipo = Tipos[valor.Next(0,4)];
-        int anio = valor.Next(1723,2023);
+        int anio = valor.Next(1723,2024);
         int mes = valor.Next(1,13);
         int dia;
         switch (mes)
@@ -150,29 +163,36 @@ public class FabricaDePersonaje{
                 nuevo.Destreza = (float)valor.Next(1,6);
                 nuevo.Fuerza = (float)valor.Next(1,11);
                 nuevo.Armadura = (float)valor.Next(1,11);
-                nuevo.Salud += (float)valor.Next(10,31);
+                nuevo.Salud += (float)(10*valor.Next(1,6));
                 break;
         }
+        nuevo.Energia = 10;
         //incremento los campos segun el rol
         string rol = roles[valor.Next(0,3)];
         switch (rol){
             case "Caballero":
                 nuevo.Armadura +=(float)2;
                 nuevo.Salud +=(float)5;
+                nuevo.Especial = Especiales[valor.Next(0,2)];
                 break;
             case "Arquero":
                 nuevo.Velocidad +=(float)2;
                 nuevo.Armadura +=(float)1;
+                nuevo.Especial = Especiales[valor.Next(2,4)];
                 break;
             case "Mago":
                 nuevo.Fuerza += (float)2;
                 nuevo.Velocidad +=(float)1;
+                nuevo.Especial = Especiales[valor.Next(4,6)];
+                break;
+            default:
+                nuevo.Especial = Especiales[valor.Next(6,8)];
                 break;
         }
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
         //Incremento los campos segun el nivel
-        float campo = 0.5f;
-        nuevo.Nivel = valor.Next(1,6);
+        float campo = 0.25f;
+        nuevo.Nivel = valor.Next(1,7);
         campo = ((nuevo.Nivel)-1)*campo;
         nuevo.Velocidad += campo;
         nuevo.Destreza += campo;

@@ -1,4 +1,5 @@
 ﻿using EspacioPersonaje;
+using EspacioCombate;
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
@@ -8,7 +9,7 @@ var fp = new FabricaDePersonaje();
 PersonajesJson pjson = new PersonajesJson();
 
 if(!(pjson.Existe("Personajes.json"))){
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 16; i++){
     listaDePersonajes.Add(fp.CrearPersonaje());
     }
     pjson.GuardarPersonajes(listaDePersonajes, "Personajes");
