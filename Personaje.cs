@@ -11,12 +11,12 @@ public class Personaje{
     private DateTime fechaDeNacimiento;
     private int edad;
     //CARACTERISTICAS
-    private int velocidad;
-    private int destreza;
-    private int fuerza;
+    private float velocidad;
+    private float destreza;
+    private float fuerza;
     private int nivel;
-    private int armadura;
-    private int salud;
+    private float armadura;
+    private float salud;
     //Propiedades de datos
     public string? Tipo { get => tipo; set => tipo = value; }
     public string? Nombre { get => nombre; set => nombre = value; }
@@ -24,60 +24,62 @@ public class Personaje{
     public DateTime FechaDeNacimiento { get => fechaDeNacimiento; set => fechaDeNacimiento = value; }
     public int Edad { get => edad; set => edad = value; }
     //Propiedades de Caracteristicas
-    public int Velocidad { get => velocidad; set => velocidad = value; }
-    public int Destreza { get => destreza; set => destreza = value; }
-    public int Fuerza { get => fuerza; set => fuerza = value; }
+    public float Velocidad { get => velocidad; set => velocidad = value; }
+    public float Destreza { get => destreza; set => destreza = value; }
+    public float Fuerza { get => fuerza; set => fuerza = value; }
     public int Nivel { get => nivel; set => nivel = value; }
-    public int Armadura { get => armadura; set => armadura = value; }
-    public int Salud { get => salud; set => salud = value; }
+    public float Armadura { get => armadura; set => armadura = value; }
+    public float Salud { get => salud; set => salud = value; }
 }
 
 public class FabricaDePersonaje{
     public string[] Nombres = {
-        "Carlos",
-        "Pepe",
-        "Juan",
-        "Colo",
-        "Jose",
-        "Rama",
-        "Guillo",
-        "Gaby",
-        "Luciano",
-        "Sergio"
+        //HUMANOS
+        "Juan","Guillermo", "José", "Miguel", "Ramiro",
+        "Alejandro", "Ricardo", "Arturo", "Luis", "Eduardo",
+        "Godric", "Gareth", "Leofric","Alfredo", "Baldwin",
+        //ORCOS
+        "Gorruk", "Grommash", "Morgoth", "Dargor", "Urzog", 
+        "Thragg", "Grishnak", "Skarn", "Drekthar", "Gorlog",
+        "Zorrok", "Gul'dan", "Morgash", "Drakka", "Narzug",
+        //ELFOS
+        "Lorindel", "Eldarian", "Elysia", "Caladwen", "Thalorin", 
+        "Aerendir", "Ariella", "Celeborn", "Elowen", "Galadriel",
+        "Melian", "Nimrodel", "Finwe", "Arwen", "Lindariel",
+        //MUERTOS VIVIENTES
+        "Morwen", "Aldric", "Seraphine", "Valerian", "Evelina", 
+        "Cassius", "Letholdus", "Rowena", "Hadrian", "Helena",
+        "Severus", "Lilith", "Necros", "Vespera", "Grimwald"
     };
     public string[] Apodos = {
-        "EL Tronco",
-        "EL Oso",
-        "EL Pato",
-        "La Cabra",
-        "EL Enano",
-        "EL Fideo",
-        "La Pulga",
-        "EL Buitre",
-        "La Neblina",
-        "El Profe"
+        //HUMANOS
+        "El Bravo", "El León", "El Valiente", "El Justiciero", "El Audaz", 
+        "El Caballero", "El Sabio", "El Honorable","El Lobo", "El Intrépido", 
+        "El Templario", "El Cruzado", "El Conquistador", "El Fiero", "El Victorioso",
+        //ORCOS
+        "El Desgarrador", "El Destructor", "El Devorador de Carne", "El Azote", "El Aplastador", 
+        "El Despiadado","El Feroz", "El Sanguinario", "El Salvaje", "El Colmillo Negro", 
+        "El Vengador", "El Rugido Negro", "El Terror Verde", "El Desollador", "El Inquebrantable",
+        //ELFOS
+        "El Radiante", "El Susurrante", "El Luminoso", "El Danzante", "El Eterno", 
+        "El Cazador de Estrellas", "El Guardián de los Bosques","El Portador de Luz", "El Arquero Silente", "El Vidente", 
+        "El Embajador de los Elfos", "El Canción de Luna", "El Bailarín Élfico","El Guardián de los Secretos", "El Celestial",
+        //MUERTOS VIVIENTES
+        "El Despojado", "El Desangrado", "El Peregrino Oscuro", "El Hambriento", "El Devorador de Almas", "El Espectro",
+        "El Desolado", "El Lamento Silencioso", "El Caminante Nocturno", "El Señor de las Sombras", "El Vengador Eterno",
+        "El Enjambre de Huesos", "El Susurrante", "El Corazón Helado", "El Infame Desollador", "El Alma Errante"
+
     };
     public string[] Tipos ={
-        "Orco Luchador",
-        "Orco Hechicero",
-        "Orco Arquero",
-        "Orco Sanador",
-        "Humano Luchador",
-        "Humano Hechicero",
-        "Humano Arquero",
-        "Humano Sanador",
-        "Elfo Luchador",
-        "Elfo Hechicero",
-        "Elfo Arquero",
-        "Elfo Sanador",
-        "Luchador Muerto",
-        "Hechicero Muerto",
-        "Arquero Muerto",
-        "Sanador Muerto"
+        "Humano", "Elfo", "Muerto Viviente", "Orco" 
+    };
+    public string[] roles ={
+        "Caballero", "Arquero", "Mago", "Común"
     };
     public Personaje CrearPersonaje(){
         Personaje nuevo = new Personaje();
         Random valor = new Random();
+        nuevo.Tipo = Tipos[valor.Next(0,4)];
         int anio = valor.Next(1723,2023);
         int mes = valor.Next(1,13);
         int dia;
@@ -99,21 +101,76 @@ public class FabricaDePersonaje{
                 dia = valor.Next(1,31);
                 break;
         }
+        //Datos segun e tipo
+        switch (nuevo.Tipo){
+            case "Humano":
+                nuevo.Nombre = Nombres[valor.Next(0,15)];
+                nuevo.Apodo = Apodos[valor.Next(0,15)];
+                nuevo.Velocidad = valor.Next(1,11);
+                nuevo.Destreza = valor.Next(1,6);
+                nuevo.Fuerza = valor.Next(1,9);
+                nuevo.Armadura = valor.Next(5,11);
+                nuevo.Salud = 100;
+                break;
+            case "Orco":
+                nuevo.Nombre = Nombres[valor.Next(15,30)];
+                nuevo.Apodo = Apodos[valor.Next(15,30)];
+                nuevo.Velocidad = valor.Next(1,11);
+                nuevo.Destreza = valor.Next(1,6);
+                nuevo.Fuerza = valor.Next(5,11);
+                nuevo.Armadura = valor.Next(1,9);
+                nuevo.Salud = 100;
+                break;
+            case "Elfo":
+                nuevo.Nombre = Nombres[valor.Next(30,45)];
+                nuevo.Apodo = Apodos[valor.Next(30,45)];
+                nuevo.Velocidad = valor.Next(5,11);
+                nuevo.Destreza = valor.Next(1,6);
+                nuevo.Fuerza = valor.Next(1,11);
+                nuevo.Armadura = valor.Next(1,11);
+                nuevo.Salud = valor.Next(90,101);
+                break;
+            case "Muerto Vieviente":
+                nuevo.Nombre = Nombres[valor.Next(45,60)];
+                nuevo.Apodo = Apodos[valor.Next(45,60)];
+                nuevo.Velocidad = valor.Next(1,9);
+                nuevo.Destreza = valor.Next(1,6);
+                nuevo.Fuerza = valor.Next(1,11);
+                nuevo.Armadura = valor.Next(1,11);
+                nuevo.Salud = valor.Next(100,121);
+                break;
+        }
+        //incremento los campos segun el rol
+        string rol = roles[valor.Next(0,3)];
+        switch (rol){
+            case "Caballero":
+                nuevo.Armadura +=2;
+                nuevo.Salud +=5;
+                break;
+            case "Arquero":
+                nuevo.Velocidad +=2;
+                nuevo.Armadura++;
+                break;
+            case "Mago":
+                nuevo.Fuerza += 2;
+                nuevo.Velocidad++;
+                break;
+        }
+        nuevo.Tipo = nuevo.Tipo + ", " + rol; 
+        //Incremento los campos segun el nivel
+        float campo = 0.5f;
+        nuevo.Nivel = valor.Next(1,11);
+        campo = ((nuevo.Nivel)-1)*campo;
+        nuevo.Velocidad += campo;
+        nuevo.Destreza += campo;
+        nuevo.Fuerza += campo;
+        nuevo.Armadura += campo;
+        nuevo.Salud += ((nuevo.Nivel)-1)*5;
 
-        //Datos
-        nuevo.Nombre = Nombres[valor.Next(0,9)];
-        nuevo.Apodo = Apodos[valor.Next(0,9)];
-        nuevo.Tipo = Tipos[valor.Next(0,16)];
+        
         nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
         nuevo.Edad = CalcularEdad(nuevo.FechaDeNacimiento);
-        //Caracteristicas
         
-        nuevo.Velocidad = valor.Next(1,11);
-        nuevo.Destreza = valor.Next(1,6);
-        nuevo.Fuerza = valor.Next(1,11);
-        nuevo.Nivel = valor.Next(1,11);
-        nuevo.Armadura = valor.Next(1,11);
-        nuevo.Salud = 100;
 
         return  nuevo;
     }
