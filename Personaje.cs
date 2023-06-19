@@ -62,7 +62,7 @@ public class FabricaDePersonaje{
         "El Vengador", "El Rugido Negro", "El Terror Verde", "El Desollador", "El Inquebrantable",
         //ELFOS
         "El Radiante", "El Susurrante", "El Luminoso", "El Danzante", "El Eterno", 
-        "El Cazador de Estrellas", "El Guardián de los Bosques","El Portador de Luz", "El Arquero Silente", "El Vidente", 
+        "El Cazador de Estrellas", "El Guardián de los Bosques","El Portador de Luz", "El Sabio del monte", "El Vidente", 
         "El Embajador de los Elfos", "El Canción de Luna", "El Bailarín Élfico","El Guardián de los Secretos", "El Celestial",
         //MUERTOS VIVIENTES
         "El Despojado", "El Desangrado", "El Peregrino Oscuro", "El Hambriento", "El Devorador de Almas", "El Espectro",
@@ -101,71 +101,70 @@ public class FabricaDePersonaje{
                 dia = valor.Next(1,31);
                 break;
         }
+        nuevo.Salud = (float)100;
         //Datos segun e tipo
         switch (nuevo.Tipo){
             case "Humano":
                 nuevo.Nombre = Nombres[valor.Next(0,15)];
                 nuevo.Apodo = Apodos[valor.Next(0,15)];
-                nuevo.Velocidad = valor.Next(1,11);
-                nuevo.Destreza = valor.Next(1,6);
-                nuevo.Fuerza = valor.Next(1,9);
-                nuevo.Armadura = valor.Next(5,11);
-                nuevo.Salud = 100;
+                nuevo.Velocidad = (float)valor.Next(1,11);
+                nuevo.Destreza = (float)valor.Next(1,6);
+                nuevo.Fuerza = (float)valor.Next(1,9);
+                nuevo.Armadura = (float)valor.Next(5,11);
                 break;
             case "Orco":
                 nuevo.Nombre = Nombres[valor.Next(15,30)];
                 nuevo.Apodo = Apodos[valor.Next(15,30)];
-                nuevo.Velocidad = valor.Next(1,11);
-                nuevo.Destreza = valor.Next(1,6);
-                nuevo.Fuerza = valor.Next(5,11);
-                nuevo.Armadura = valor.Next(1,9);
-                nuevo.Salud = 100;
+                nuevo.Velocidad = (float)valor.Next(1,11);
+                nuevo.Destreza = (float)valor.Next(1,6);
+                nuevo.Fuerza = (float)valor.Next(5,11);
+                nuevo.Armadura = (float)valor.Next(1,9);
                 break;
             case "Elfo":
                 nuevo.Nombre = Nombres[valor.Next(30,45)];
                 nuevo.Apodo = Apodos[valor.Next(30,45)];
-                nuevo.Velocidad = valor.Next(5,11);
-                nuevo.Destreza = valor.Next(1,6);
-                nuevo.Fuerza = valor.Next(1,11);
-                nuevo.Armadura = valor.Next(1,11);
-                nuevo.Salud = valor.Next(90,101);
+                nuevo.Velocidad = (float)valor.Next(5,11);
+                nuevo.Destreza = (float)valor.Next(1,6);
+                nuevo.Fuerza = (float)valor.Next(1,11);
+                nuevo.Armadura = (float)valor.Next(1,11);
+                nuevo.Salud = (float)valor.Next(90,101);
                 break;
             case "Muerto Vieviente":
                 nuevo.Nombre = Nombres[valor.Next(45,60)];
                 nuevo.Apodo = Apodos[valor.Next(45,60)];
-                nuevo.Velocidad = valor.Next(1,9);
-                nuevo.Destreza = valor.Next(1,6);
-                nuevo.Fuerza = valor.Next(1,11);
-                nuevo.Armadura = valor.Next(1,11);
-                nuevo.Salud = valor.Next(100,121);
+                nuevo.Velocidad = (float)valor.Next(1,9);
+                nuevo.Destreza = (float)valor.Next(1,6);
+                nuevo.Fuerza = (float)valor.Next(1,11);
+                nuevo.Armadura = (float)valor.Next(1,11);
+                nuevo.Salud += (float)valor.Next(5,20);
                 break;
         }
         //incremento los campos segun el rol
         string rol = roles[valor.Next(0,3)];
         switch (rol){
             case "Caballero":
-                nuevo.Armadura +=2;
-                nuevo.Salud +=5;
+                nuevo.Armadura +=(float)2;
+                nuevo.Salud +=(float)5;
                 break;
             case "Arquero":
-                nuevo.Velocidad +=2;
+                nuevo.Velocidad +=(float)2;
                 nuevo.Armadura++;
                 break;
             case "Mago":
-                nuevo.Fuerza += 2;
+                nuevo.Fuerza += (float)2;
                 nuevo.Velocidad++;
                 break;
         }
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
         //Incremento los campos segun el nivel
-        float campo = 0.5f;
+        float campo = 0.25f;
         nuevo.Nivel = valor.Next(1,11);
         campo = ((nuevo.Nivel)-1)*campo;
         nuevo.Velocidad += campo;
         nuevo.Destreza += campo;
         nuevo.Fuerza += campo;
         nuevo.Armadura += campo;
-        nuevo.Salud += ((nuevo.Nivel)-1)*5;
+        nuevo.Salud += (float)(((nuevo.Nivel)-1)*5);
 
         
         nuevo.FechaDeNacimiento = new DateTime(anio, mes, dia);
