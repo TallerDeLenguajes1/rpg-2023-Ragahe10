@@ -16,19 +16,19 @@ if(!(pjson.Existe("Personajes.json"))){
 }
 listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
 if(listaDePersonajes != null){
-    System.Console.WriteLine("---------PERSONAJES-------");
-    foreach (var personaje in listaDePersonajes){
-       personaje.MostrarPersonaje();
-    }
-    System.Console.WriteLine("--------------------------");
     var combate = new Combates();
-    // listaDePersonajes = combate.Sorteo(listaDePersonajes);
+    listaDePersonajes = combate.Sorteo(listaDePersonajes);
+    System.Console.WriteLine("--------------------------");
+    listaDePersonajes[0].MostrarPersonaje();
+    System.Console.WriteLine("--------------------------");
+    listaDePersonajes[1].MostrarPersonaje();
+    System.Console.WriteLine("--------------------------");
     // System.Console.WriteLine("---------PERSONAJES-------");
     // foreach (var personaje in listaDePersonajes){
     //    personaje.MostrarPersonaje();
     // }
     // System.Console.WriteLine("--------------------------");
-
+    combate.Combate(listaDePersonajes[0],listaDePersonajes[1]).MostrarPersonaje();
 }else{
     System.Console.WriteLine("no hay personajes");
 }
