@@ -229,9 +229,17 @@ public class Combates{
     public float DañoProvocado(Personaje p1, float defensa){
         float daño, ataque;
         var efectividad = new Random();
+        int efe = efectividad.Next(1,101);
+        if(efe>60){
+            System.Console.WriteLine("Super efectivo");
+        }else if(efe>30){
+            System.Console.WriteLine("Efectivo");
+        }else{
+            System.Console.WriteLine("Poco efectivo");
+        }
         ataque = p1.Fuerza * p1.Destreza * p1.Nivel;
 
-        daño = ((ataque * efectividad.Next(1,101))- defensa)/500;
+        daño = ((ataque * efe)- defensa)/500;
 
         return daño;
     }
