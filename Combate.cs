@@ -45,20 +45,20 @@ public class Combates{
         auxp2.Energia = p2.Energia;
         auxp2.Armadura = p2.Armadura;
 
-        int i = 1;
+        //int i = 1;
         while(p1.Salud>0 && p2.Salud>0){
-            System.Console.WriteLine($"************************RONDA "+ i +"************************");
-            i++;
-            System.Console.WriteLine(p1.Nombre + ", " + p1.Apodo);
-            System.Console.WriteLine(" - Salud: "+ p1.Salud);
-            System.Console.WriteLine(" - Energía: "+ p1.Energia);
-            System.Console.WriteLine("-------------------------------------------------");
-            System.Console.WriteLine(p2.Nombre + ", " + p2.Apodo);
-            System.Console.WriteLine(" - Salud: "+ p2.Salud);
-            System.Console.WriteLine(" - Energía: "+ p2.Energia);
-            System.Console.WriteLine("-------------------------------------------------");
+            //System.Console.WriteLine($"************************RONDA "+ i +"************************");
+            //i++;
+            // System.Console.WriteLine(p1.Nombre + ", " + p1.Apodo);
+            // System.Console.WriteLine(" - Salud: "+ p1.Salud);
+            // System.Console.WriteLine(" - Energía: "+ p1.Energia);
+            // System.Console.WriteLine("-------------------------------------------------");
+            // System.Console.WriteLine(p2.Nombre + ", " + p2.Apodo);
+            // System.Console.WriteLine(" - Salud: "+ p2.Salud);
+            // System.Console.WriteLine(" - Energía: "+ p2.Energia);
+            // System.Console.WriteLine("-------------------------------------------------");
             if(p1.Velocidad>p2.Velocidad){
-                System.Console.WriteLine("TURNO DE " + p1.Nombre);
+                //System.Console.WriteLine("TURNO DE " + p1.Nombre);
                 switch(valor.Next(1,11)){
                     case 1://Ataque normal
                     case 2:
@@ -67,12 +67,12 @@ public class Combates{
                     case 5:
                     case 6:
                         if(p1.Energia>=2){
-                            System.Console.WriteLine(p1.Nombre + ", hizo un ataque normal");
+                           // System.Console.WriteLine(p1.Nombre + ", hizo un ataque normal");
                             daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad));
                             p2.Salud = p2.Salud - daño;
                             p1.Energia = p1.Energia - 2;
                         }else{
-                            System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque normal");
+                            //System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque normal");
                         }
                         break;
                     case 7://defensa
@@ -80,11 +80,11 @@ public class Combates{
                     case 9:
                         p1.Armadura += 1;
                         p1.Energia +=2;
-                        System.Console.WriteLine(p1.Nombre + ", aumentó su defensa");
+                        //System.Console.WriteLine(p1.Nombre + ", aumentó su defensa");
                         break;
                     case 10://Habilidad especial
                         if(p1.Energia>=4){
-                            System.Console.WriteLine(p1.Nombre + ", usó su habilidad especial");
+                           // System.Console.WriteLine(p1.Nombre + ", usó su habilidad especial");
                             if(p1.Especial == "Escudo protector" || p1.Especial == "Flecha anestésica" || p1.Especial == "Frío envolvente" || p1.Especial == "Vendas"){
                                 p1.Energia -= 4;
                                 p1.Armadura += 2; 
@@ -95,7 +95,7 @@ public class Combates{
                                 p1.Energia = p1.Energia - 4;
                             }
                         }else{
-                            System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque especial");
+                           // System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque especial");
                         }
                         break;
                 }
@@ -108,12 +108,12 @@ public class Combates{
                         case 5:
                         case 6:
                             if(p2.Energia>=2){
-                                System.Console.WriteLine(p2.Nombre + ", hizo un ataque normal");
+                               // System.Console.WriteLine(p2.Nombre + ", hizo un ataque normal");
                                 daño = DañoProvocado(p2,(p1.Armadura*p1.Velocidad));
                                 p1.Salud = p1.Salud - daño;
                                 p2.Energia = p2.Energia - 2;
                             }else{
-                                System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque normal");
+                               // System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque normal");
                             }
                             break;
                         case 7://defensa
@@ -121,11 +121,11 @@ public class Combates{
                         case 9:
                             p2.Armadura += 1;
                             p2.Energia +=2;
-                            System.Console.WriteLine(p2.Nombre + ", aumentó su defensa");
+                           // System.Console.WriteLine(p2.Nombre + ", aumentó su defensa");
                             break;
                         case 10://Habilidad especial
                             if(p2.Energia>=4){
-                                System.Console.WriteLine(p2.Nombre + ", usó su habilidad especial");
+                                //System.Console.WriteLine(p2.Nombre + ", usó su habilidad especial");
                                 if(p2.Especial == "Escudo protector" || p2.Especial == "Flecha anestésica" || p2.Especial == "Frío envolvente" || p2.Especial == "Vendas"){
                                     p2.Energia -= 4;
                                     p2.Armadura += 2;
@@ -136,7 +136,7 @@ public class Combates{
                                     p2.Energia = p2.Energia - 4;
                                 }
                             }else{
-                                System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque especial");
+                                //System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque especial");
                             }
                             break;
                     }
@@ -150,12 +150,12 @@ public class Combates{
                     case 5:
                     case 6:
                         if(p2.Energia>=2){
-                            System.Console.WriteLine(p2.Nombre + ", hizo un ataque normal");
+                           // System.Console.WriteLine(p2.Nombre + ", hizo un ataque normal");
                             daño = DañoProvocado(p2,(p1.Armadura*p1.Velocidad));
                             p1.Salud = p1.Salud - daño;
                             p2.Energia = p2.Energia - 2;
                         }else{
-                            System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque normal");
+                            //System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque normal");
                         }
                         break;
                     case 7://defensa
@@ -163,11 +163,11 @@ public class Combates{
                     case 9:
                         p2.Armadura += 1;
                         p2.Energia +=2;
-                        System.Console.WriteLine(p2.Nombre + ", aumentó su defensa");
+                       // System.Console.WriteLine(p2.Nombre + ", aumentó su defensa");
                         break;
                     case 10://Habilidad especial
                         if(p2.Energia>=4){
-                            System.Console.WriteLine(p2.Nombre + ", usó su habilidad especial");
+                            //System.Console.WriteLine(p2.Nombre + ", usó su habilidad especial");
                             if(p2.Especial == "Escudo protector" || p2.Especial == "Flecha anestésica" || p2.Especial == "Frío envolvente" || p2.Especial == "Vendas"){
                                 p2.Energia -= 4;
                                 p2.Armadura += 2;
@@ -178,7 +178,7 @@ public class Combates{
                                 p2.Energia = p2.Energia - 4;
                             }
                         }else{
-                            System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque especial");
+                           // System.Console.WriteLine(p2.Nombre + ", no tiene energias para su ataque especial");
                         }
                         break;
                 }
@@ -191,12 +191,12 @@ public class Combates{
                         case 5:
                         case 6:
                             if(p1.Energia>=2){
-                                System.Console.WriteLine(p1.Nombre + ", hizo un ataque normal");
+                               // System.Console.WriteLine(p1.Nombre + ", hizo un ataque normal");
                                 daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad));
                                 p2.Salud = p2.Salud - daño;
                                 p1.Energia = p1.Energia - 2;
                             }else{
-                                System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque normal");
+                               // System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque normal");
                             }
                             break;
                         case 7://defensa
@@ -204,11 +204,11 @@ public class Combates{
                         case 9:
                             p1.Armadura += 1;
                             p1.Energia +=2;
-                            System.Console.WriteLine(p1.Nombre + ", aumentó su defensa");
+                           // System.Console.WriteLine(p1.Nombre + ", aumentó su defensa");
                             break;
                         case 10://Habilidad especial
                             if(p1.Energia>=4){
-                                System.Console.WriteLine(p1.Nombre + ", usó su habilidad especial");
+                               // System.Console.WriteLine(p1.Nombre + ", usó su habilidad especial");
                                 if(p1.Especial == "Escudo protector" || p1.Especial == "Flecha anestésica" || p1.Especial == "Frío envolvente" || p1.Especial == "Vendas"){
                                     p1.Energia -= 4;
                                     p1.Armadura += 2; 
@@ -219,17 +219,17 @@ public class Combates{
                                     p1.Energia = p1.Energia - 4;
                                 }
                             }else{
-                                System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque especial");
+                                //System.Console.WriteLine(p1.Nombre + ", no tiene energias para su ataque especial");
                             }
                             break;
                     }
                 }
             }
-            System.Console.WriteLine("******FIN DE LOS ATAQUES******");
+           // System.Console.WriteLine("******FIN DE LOS ATAQUES******");
             if(valor.Next(1,6)==1){
                 if(p1.Tipo!=null){
                     string tipo = p1.Tipo.Split(",")[0];
-                    System.Console.WriteLine(p1.Nombre + ", pudo usar su pasiva como "+ tipo);
+                    //System.Console.WriteLine(p1.Nombre + ", pudo usar su pasiva como "+ tipo);
                     switch (tipo){
                         case "Humano":
                             p1.Armadura += 1;
@@ -249,7 +249,7 @@ public class Combates{
             if(valor.Next(1,6)==1){
                 if(p2.Tipo!=null){
                     string tipo = p2.Tipo.Split(",")[0];
-                    System.Console.WriteLine(p2.Nombre + ", pudo usar su pasiva como "+ tipo);
+                    //System.Console.WriteLine(p2.Nombre + ", pudo usar su pasiva como "+ tipo);
                     switch (tipo){
                         case "Humano":
                             p2.Armadura += 1;
@@ -266,7 +266,7 @@ public class Combates{
                     }
                 }
             }
-            System.Console.WriteLine($"**********************FIN DE RONDA***********************");
+            //System.Console.WriteLine($"**********************FIN DE RONDA***********************");
         }
         if(p1.Salud>0){
             return auxp1;
@@ -278,17 +278,52 @@ public class Combates{
         float daño, ataque;
         var efectividad = new Random();
         int efe = efectividad.Next(1,101);
-        if(efe>60){
-            System.Console.WriteLine("Super efectivo");
-        }else if(efe>30){
-            System.Console.WriteLine("Efectivo");
-        }else{
-            System.Console.WriteLine("Poco efectivo");
-        }
+        // if(efe>60){
+        //     System.Console.WriteLine("Super efectivo");
+        // }else if(efe>30){
+        //     System.Console.WriteLine("Efectivo");
+        // }else{
+        //     System.Console.WriteLine("Poco efectivo");
+        // }
         ataque = p1.Fuerza * p1.Destreza * p1.Nivel;
 
-        daño = ((ataque * efe)- defensa)/250;
+        daño = ((ataque * efe)- defensa)/100;
 
         return daño;
     }
+    public void Torneo(List<Personaje> competidores){
+        int i =1, j;
+        competidores = Sorteo(competidores);
+        while(competidores.Count()>1){
+            System.Console.WriteLine(i+"° Combates");
+            i++;
+            j=1;
+            foreach (var item in competidores)
+            {
+                System.Console.WriteLine(" "+j+"- "+item.Nombre+", "+item.Apodo+"("+item.Tipo+")");
+                if(j%2 == 0){
+                    System.Console.WriteLine(" ");
+                }
+                j++;
+            }
+            competidores = Ganadores(competidores);
+        }
+        System.Console.WriteLine("EL GANADO ES ");
+        competidores[0].MostrarPersonaje();
+    }
+    public List<Personaje> Ganadores(List<Personaje> Competidores){
+        var resultados = new List<Personaje>();
+        while(Competidores.Count()>0){
+            if(Competidores.Count()>1){
+                resultados.Add(Combate(Competidores[0],Competidores[1]));
+                Competidores.Remove(Competidores[0]);
+                Competidores.Remove(Competidores[0]);
+            }else{
+                resultados.Add(Competidores[0]);
+                Competidores.Remove(Competidores[0]);
+            }
+        }
+        return resultados;
+    }
 }
+
