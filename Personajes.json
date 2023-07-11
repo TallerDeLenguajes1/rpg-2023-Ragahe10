@@ -217,10 +217,10 @@
         "FechaDeNacimiento":"1976-04-12T00:00:00",
         "Edad":47,
         "Especial":"Fr\u00EDo envolvente",
-        "Velocidad":11,
-        "Destreza":5,
+        "Velocidad":8,
+        "Destreza":4,
         "Fuerza":11,
-        "Nivel":6,
+        "Nivel":3,
         "Armadura":4,
         "Salud":100,
         "Energia":10
@@ -238,4 +238,6 @@
         "Nivel":4,
         "Armadura":3,
         "Salud":100,
-        "Energia":10}]
+        "Energia":10
+    }
+]

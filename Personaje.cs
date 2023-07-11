@@ -37,18 +37,62 @@ public class Personaje{
     public int Energia { get => energia; set => energia = value; }
 
     public void MostrarPersonaje(){
-        System.Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.Console.WriteLine(" - PERSONAJE: "+ Nombre +", "+ Apodo);
-        System.Console.WriteLine(" - LVL: "+ Nivel + "| TIPO: "+ Tipo);
-        System.Console.WriteLine(" - FECHA DE NACIMIENTO: "+ FechaDeNacimiento.ToShortDateString());
-        System.Console.WriteLine(" - EDAD: "+ Edad);
-        System.Console.WriteLine(" - CARACTERISTICAS:");
-        System.Console.WriteLine("    -> H.ESPECIAL: "+ Especial);
-        System.Console.WriteLine("    -> SALUD: "+ Salud);
-        System.Console.WriteLine("    -> VELOCIDAD: "+ Velocidad);
-        System.Console.WriteLine("    -> DESTREZA: "+ Destreza);
-        System.Console.WriteLine("    -> FUERZA: "+ Fuerza);
-        System.Console.WriteLine("    -> ARMADURA: "+ Armadura);
+        string aux = "¤ " + Nombre + ", "+ Apodo + " ¤";
+        string aux3 = "«LVL: " + Nivel + "»";
+        string aux2 = "«" + Tipo.Split()[1] + "»";
+        string signo;
+        switch (Tipo.Split(',')[0]){
+            case "Humano":
+                signo = "HUM";
+            break;
+            case "Elfo":
+                signo = "ELF";
+            break;
+            case "Muerto Viviente":
+                signo = "MVT";
+            break;
+            case "Orco":
+                signo = "ORC";
+            break;
+            default:
+                signo = "<O>";
+            break;
+        } 
+        System.Console.WriteLine("╔══════════════════════════════════════════╗");
+        System.Console.WriteLine("║" +Centrar(aux,42) + "║");
+        System.Console.WriteLine("║" +Centrar(aux2,18) + "╔═══╗" + Centrar(aux3,19) + "║");
+        System.Console.WriteLine("╚═════════════════╗║"+ signo +"║╔══════════════════╝");
+        System.Console.WriteLine("╔═════════════════╝╚═══╝╚══════════════════╗");
+        System.Console.WriteLine("║             »CARACTERISTICAS«            ║");
+        System.Console.WriteLine("║               ├>Vida: "+ Numero(Salud) +"                ║");
+        System.Console.WriteLine("║               ├>Dest: "+ Numero(Destreza) +"                ║");
+        System.Console.WriteLine("║               ├>Frza: "+ Numero(Fuerza) +"                ║");
+        System.Console.WriteLine("║               ├>Velc: "+ Numero(Velocidad) +"                ║");
+        System.Console.WriteLine("║               ├>Armd: "+ Numero(Armadura) +"                ║");
+        System.Console.WriteLine("║               └>Armd: "+ Numero(Edad) +"                ║");
+        System.Console.WriteLine("║                »ESPECIAL«                ║");
+        aux ="< " + Especial + " >";
+        System.Console.WriteLine("║" +Centrar(aux,42) + "║");
+        System.Console.WriteLine("╚══════════════════════════════════════════╝");
+    }
+    private string Centrar(string palabra, int espacios){
+        int Blanco = (espacios - palabra.Length)/2;
+        string palabraCentrada = palabra.PadLeft(palabra.Length + Blanco);
+        palabraCentrada = palabraCentrada.PadRight(espacios);
+        return palabraCentrada;
+    }
+    private string Numero(float num){
+        string aux;
+        if(num<10){
+            aux = "  "+num;
+        }else{
+            if(num<100){
+                aux = " "+num;
+            }else{
+                aux = num.ToString();
+            }
+        }
+        return aux;
     }
 }
 
