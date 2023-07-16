@@ -44,7 +44,7 @@ public class Personaje{
         string aux2;
         string signo = "<O>";
         if(Tipo != null){
-            aux2 = "«" + Tipo.Split()[1] + "»";
+            aux2 = "«" + Tipo.Split(',')[1] + " »";
             switch (Tipo.Split(',')[0]){
             case "Humano":
                 signo = "HUM";
@@ -63,7 +63,7 @@ public class Personaje{
             break;
         } 
         }else{
-            aux2 = "«" + "" + "»";
+            aux2 = "«" + "" + " »";
         }
         
         System.Console.WriteLine("                 ╔═══════╗");
@@ -78,7 +78,7 @@ public class Personaje{
         System.Console.WriteLine("║               ├>Frza: "+ Numero(Fuerza) +"                ║");
         System.Console.WriteLine("║               ├>Velc: "+ Numero(Velocidad) +"                ║");
         System.Console.WriteLine("║               ├>Armd: "+ Numero(Armadura) +"                ║");
-        System.Console.WriteLine("║               └>Armd: "+ Numero(Edad) +"                ║");
+        System.Console.WriteLine("║               └>Edad: "+ Numero(Edad) +"                ║");
         System.Console.WriteLine("║                »ESPECIAL«                ║");
         aux ="< " + Especial + " >";
         System.Console.WriteLine("║" +Centrar(aux,42) + "║");

@@ -53,6 +53,8 @@ static void Presentacion()
 static void Menu(PersonajesJson pjson, List<Personaje> listaP)
 {
     ConsoleKeyInfo key, aux;
+    int option = 1, salida=0;
+    
     do{
         Console.WriteLine("╔══════════════════════════════════════════╗");
         Console.WriteLine("║                                          ║");
@@ -60,46 +62,72 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP)
         Console.WriteLine("║                 ║INICIO║                 ║");
         Console.WriteLine("║                 ╚══════╝                 ║");
         Console.WriteLine("║         ┌─────────────────────┐          ║");
-        Console.WriteLine("║         │1.      Jugar      .1│          ║");
+        if(option == 1){
+            Console.WriteLine("║        >│1.      Jugar      .1│<         ║");
+        }else{
+            Console.WriteLine("║         │1.      Jugar      .1│          ║");
+        }
         Console.WriteLine("║         ├─────────────────────┤          ║");
-        Console.WriteLine("║         │2.    Personajes   .2│          ║");
+        if(option == 2){
+            Console.WriteLine("║        >│2.    Personajes   .2│<         ║");
+        }else{
+            Console.WriteLine("║         │2.    Personajes   .2│          ║");
+        }
         Console.WriteLine("║         ├─────────────────────┤          ║");
-        Console.WriteLine("║         │3.      SALIR      .3│          ║");
+        if(option == 3){
+            Console.WriteLine("║        >│3.      SALIR      .3│<         ║");
+        }else{
+            Console.WriteLine("║         │3.      SALIR      .3│          ║");
+        }
         Console.WriteLine("║         └─────────────────────┘          ║");
         Console.WriteLine("║                                          ║");
         Console.WriteLine("║                                          ║");
         Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
         Console.WriteLine("╚══════════════════════════════════════════╝");
-        key = Console.ReadKey(intercept: true);
+        key = Console.ReadKey();
         Console.Clear();
-        switch (key.Key){
-            case ConsoleKey.D1:
-                //menu para elejir personaje y empezar partida
-                break;
-            case ConsoleKey.D2:
-                int i = 0;
-                do{
-                    Console.Clear();
-                    System.Console.WriteLine("          ╔══════════════════════╗");
-                    System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
-                    System.Console.WriteLine("          ╚══════════════════════╝");
-                    listaP[i].MostrarPersonaje();
-                    System.Console.WriteLine("'Usa las flechas para avanzar o retroceder'");
-                    System.Console.WriteLine("        >>Toca ESC para volver<<");
-                    aux = Console.ReadKey(intercept: true);
-                    if(aux.Key == ConsoleKey.RightArrow || aux.Key == ConsoleKey.UpArrow){
-                        i++;
-                    }else if(aux.Key == ConsoleKey.LeftArrow || aux.Key == ConsoleKey.DownArrow){
-                        i--;
-                    }
-                    if(i<0){
-                        i = (listaP.Count()-1);
-                    }else if(i>(listaP.Count()-1)){
-                        i = 0;
-                    }
-                }while(aux.Key != ConsoleKey.Escape );
-                break;
+        if(key.Key == ConsoleKey.Enter){
+            switch (option){
+                case 1:
+                    //menu para elejir personaje y empezar partida
+                    break;
+                case 2:
+                    int i = 0;
+                    do{
+                        Console.Clear();
+                        System.Console.WriteLine("          ╔══════════════════════╗");
+                        System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
+                        System.Console.WriteLine("          ╚══════════════════════╝");
+                        listaP[i].MostrarPersonaje();
+                        System.Console.WriteLine("'Usa las flechas para avanzar o retroceder'");
+                        System.Console.WriteLine("        >>Toca ESC para volver<<");
+                        aux = Console.ReadKey(intercept: true);
+                        if(aux.Key == ConsoleKey.RightArrow || aux.Key == ConsoleKey.UpArrow){
+                            i++;
+                        }else if(aux.Key == ConsoleKey.LeftArrow || aux.Key == ConsoleKey.DownArrow){
+                            i--;
+                        }
+                        if(i<0){
+                            i = (listaP.Count()-1);
+                        }else if(i>(listaP.Count()-1)){
+                            i = 0;
+                        }
+                    }while(aux.Key != ConsoleKey.Escape );
+                    break;
+                case 3:
+                    salida = 3;
+                    break;
+            }
+        }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
+            option++;
+        }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
+            option--;
+        }
+        if(option<1){
+            option = 3;
+        }else if(option>3){
+            option = 1;
         }
         Console.Clear();
-    }while(key.Key != ConsoleKey.D4 || key.Key != ConsoleKey.Escape);
+    }while(salida != 3 && key.Key != ConsoleKey.Escape);
 }
