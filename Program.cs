@@ -3,8 +3,6 @@ using EspacioCombates;
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 Presentacion();
-Console.ReadKey();
-Console.Clear();
 
 List<Personaje>? listaDePersonajes = new List<Personaje>();
 
@@ -13,17 +11,17 @@ PersonajesJson pjson = new PersonajesJson();
 
 if(!(pjson.Existe("Personajes.json"))){
     for (int i = 1; i < 10; i++){
-        listaDePersonajes.Add(fp.CrearPersonaje(i));
+        listaDePersonajes.Add(fp.CrearPersonaje());
     }
     pjson.GuardarPersonajes(listaDePersonajes, "Personajes");
 }
 listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
 if(listaDePersonajes != null){
-    Menu(pjson, listaDePersonajes);
+    Menu(pjson, listaDePersonajes, fp);
 }else{
     Console.WriteLine("no hay personajes");
 }
-
+//VaciarPersonajes("Personajes.json");
 // listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
 // if(listaDePersonajes != null){
 //     var combate = new Combates();
@@ -34,25 +32,26 @@ if(listaDePersonajes != null){
 
 static void Presentacion()
 {
-    Console.WriteLine("┌───────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-    Console.WriteLine("│ ┌───────┐┌───────┐  ┌────────────┐  ┌──────────┐   	 ┌───┐        ┌───┐  ┌────────────┐  ┌──────────┐   │");
-    Console.WriteLine("│ │       └┘       │  │            │  │          └─┐ 	 │   │        │   │  │            │  │          └─┐ │");
-    Console.WriteLine("│ │   ┌──┐  ┌──┐   │  │  ┌──────┐  │  │  ┌─────┐   └┐	 │   │        │   │  │  ┌──────┐  │  │  ┌─────┐   │ │");
-    Console.WriteLine("│ │   │  │  │  │   │  │  │      │  │  │  │     └─┐  │	 │   │        │   │  │  │      │  │  │  │     └┐  │ │");
-    Console.WriteLine("│ │   │  │  │  │   │  │  │      │  │  │  │       │  │	 │   │        │   │  │  │      │  │  │  │     ┌┘  │ │");
-    Console.WriteLine("│ │   │  │  │  │   │  │  └──────┘  │  │  │       │  │	 │   │  ┌──┐  │   │  │  └──────┘  │  │  └─────┘  ┌┘ │");
-    Console.WriteLine("│ │   │  │  │  │   │  │            │  │  │       │  │	 │   │  │  │  │   │  │            │  │         ┌─┘  │");
-    Console.WriteLine("│ │   │  └──┘  │   │  │  ┌──────┐  │  │  │       │  │	 │   │  │  │  │   │  │  ┌──────┐  │  │  ┌───┐  └─┐  │");
-    Console.WriteLine("│ │   │        │   │  │  │      │  │  │  │     ┌─┘  │	 │   │  │  │  │   │  │  │      │  │  │  │   └─┐  └┐ │");
-    Console.WriteLine("│ │   │        │   │  │  │      │  │  │  └─────┘   ┌┘	 │   └──┘  └──┘   │  │  │      │  │  │  │     └┐  │ │");
-    Console.WriteLine("│ │   │        │   │  │  │      │  │  │          ┌─┘ 	 │       ┌┐       │  │  │      │  │  │  │      │  │ │");
-    Console.WriteLine("│ └───┘        └───┘  └──┘      └──┘  └──────────┘   	 └───────┘└───────┘  └──┘      └──┘  └──┘      └──┘ │");
-    Console.WriteLine("└───────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
-    Console.WriteLine("                                          >>press ENTER to start<<");
+    Console.WriteLine("┌─────────────────────────────────────────────────────────────────────────────────────────┐");
+    Console.WriteLine("│ ┌───────┐┌───────┐┌──────────┐┌────────┐     ┌───┐        ┌───┐┌──────────┐┌────────┐   │");
+    Console.WriteLine("│ │       └┘       ││          ││        └─┐   │   │        │   ││          ││        └─┐ │");
+    Console.WriteLine("│ │   ┌──┐  ┌──┐   ││  ┌────┐  ││  ┌───┐   └┐  │   │        │   ││  ┌────┐  ││  ┌───┐   │ │");
+    Console.WriteLine("│ │   │  │  │  │   ││  │    │  ││  │   └─┐  │  │   │        │   ││  │    │  ││  │   └┐  │ │");
+    Console.WriteLine("│ │   │  │  │  │   ││  │    │  ││  │     │  │  │   │        │   ││  │    │  ││  │   ┌┘  │ │");
+    Console.WriteLine("│ │   │  │  │  │   ││  └────┘  ││  │     │  │  │   │  ┌──┐  │   ││  └────┘  ││  └───┘  ┌┘ │");
+    Console.WriteLine("│ │   │  └──┘  │   ││  ┌────┐  ││  │     │  │  │   │  │  │  │   ││  ┌────┐  ││       ┌─┘  │");
+    Console.WriteLine("│ │   │        │   ││  │    │  ││  │   ┌─┘  │  │   │  │  │  │   ││  │    │  ││  ┌─┐  └─┐  │");
+    Console.WriteLine("│ │   │        │   ││  │    │  ││  └───┘   ┌┘  │   └──┘  └──┘   ││  │    │  ││  │ └─┐  └┐ │");
+    Console.WriteLine("│ │   │        │   ││  │    │  ││        ┌─┘   │       ┌┐       ││  │    │  ││  │   └┐  │ │");
+    Console.WriteLine("│ └───┘        └───┘└──┘    └──┘└────────┘     └───────┘└───────┘└──┘    └──┘└──┘    └──┘ │");
+    Console.WriteLine("└─────────────────────────────────────────────────────────────────────────────────────────┘");
+    Console.WriteLine("                                 >>press ENTER to start<<");
+    Console.ReadKey();
+    Console.Clear();
 }
-static void Menu(PersonajesJson pjson, List<Personaje> listaP)
-{
-    ConsoleKeyInfo key, aux;
+
+static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaje fp){
+    ConsoleKeyInfo key;
     int option = 1, salida=0;
     
     do{
@@ -63,21 +62,21 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP)
         Console.WriteLine("║                 ╚══════╝                 ║");
         Console.WriteLine("║         ┌─────────────────────┐          ║");
         if(option == 1){
-            Console.WriteLine("║        >│1.      Jugar      .1│<         ║");
+            Console.WriteLine("║        »│ .      Jugar      . │«         ║");
         }else{
-            Console.WriteLine("║         │1.      Jugar      .1│          ║");
+            Console.WriteLine("║         │ .      Jugar      . │          ║");
         }
         Console.WriteLine("║         ├─────────────────────┤          ║");
         if(option == 2){
-            Console.WriteLine("║        >│2.    Personajes   .2│<         ║");
+            Console.WriteLine("║        »│ .    Personajes   . │«         ║");
         }else{
-            Console.WriteLine("║         │2.    Personajes   .2│          ║");
+            Console.WriteLine("║         │ .    Personajes   . │          ║");
         }
         Console.WriteLine("║         ├─────────────────────┤          ║");
         if(option == 3){
-            Console.WriteLine("║        >│3.      SALIR      .3│<         ║");
+            Console.WriteLine("║        »│ .      SALIR      . │«         ║");
         }else{
-            Console.WriteLine("║         │3.      SALIR      .3│          ║");
+            Console.WriteLine("║         │ .      SALIR      . │          ║");
         }
         Console.WriteLine("║         └─────────────────────┘          ║");
         Console.WriteLine("║                                          ║");
@@ -92,27 +91,7 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP)
                     //menu para elejir personaje y empezar partida
                     break;
                 case 2:
-                    int i = 0;
-                    do{
-                        Console.Clear();
-                        System.Console.WriteLine("          ╔══════════════════════╗");
-                        System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
-                        System.Console.WriteLine("          ╚══════════════════════╝");
-                        listaP[i].MostrarPersonaje();
-                        System.Console.WriteLine("'Usa las flechas para avanzar o retroceder'");
-                        System.Console.WriteLine("        >>Toca ESC para volver<<");
-                        aux = Console.ReadKey(intercept: true);
-                        if(aux.Key == ConsoleKey.RightArrow || aux.Key == ConsoleKey.UpArrow){
-                            i++;
-                        }else if(aux.Key == ConsoleKey.LeftArrow || aux.Key == ConsoleKey.DownArrow){
-                            i--;
-                        }
-                        if(i<0){
-                            i = (listaP.Count()-1);
-                        }else if(i>(listaP.Count()-1)){
-                            i = 0;
-                        }
-                    }while(aux.Key != ConsoleKey.Escape );
+                    OpPersonajes(listaP, fp, pjson);
                     break;
                 case 3:
                     salida = 3;
@@ -124,10 +103,134 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP)
             option--;
         }
         if(option<1){
-            option = 3;
-        }else if(option>3){
             option = 1;
+        }else if(option>3){
+            option = 3;
         }
         Console.Clear();
     }while(salida != 3 && key.Key != ConsoleKey.Escape);
 }
+
+static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp, PersonajesJson pjson){
+    int i = 0, prim = listaP.Count()-1;
+    ConsoleKeyInfo aux;
+    int op =1, salida =0;
+    do{
+        Console.Clear();
+        System.Console.WriteLine("          ╔══════════════════════╗");
+        System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
+        System.Console.WriteLine("          ╚══════════════════════╝");
+        listaP[i].MostrarPersonaje();
+        System.Console.WriteLine("'Usa las flechas (<- ó ->)para cambiar de personaje'");
+        System.Console.WriteLine("          ┌─────────────────────┐");
+        if(op == 1){
+        System.Console.WriteLine("         »│ . Crear Personaje . │«");
+        }else{
+        System.Console.WriteLine("          │ . Crear Personaje . │");
+        }
+        System.Console.WriteLine("          ├─────────────────────┤");
+        if(i>prim){
+            if(op == 2){
+            System.Console.WriteLine("         »│ .      SALIR      . │«");
+            }else{
+            System.Console.WriteLine("          │ .      SALIR      . │");
+            }
+            System.Console.WriteLine("          ├─────────────────────┤");
+            if(op == 3){
+            System.Console.WriteLine("         »│ .      BORRAR     . │«");
+            }else{
+            System.Console.WriteLine("          │ .      BORRAR     . │");
+            }
+            System.Console.WriteLine("          └─────────────────────┘");
+            aux = Console.ReadKey(intercept: true);
+            if(aux.Key == ConsoleKey.UpArrow){
+                op--;
+            }else if(aux.Key == ConsoleKey.DownArrow){
+                op++;
+            }
+            if(op<0){
+                op = 1;
+            }else if(op>3){
+                op = 3;
+            }
+        }else{
+            if(op == 2){
+            System.Console.WriteLine("         »│ .      SALIR      . │«");
+            }else{
+            System.Console.WriteLine("          │ .      SALIR      . │");
+            }
+            System.Console.WriteLine("          └─────────────────────┘");
+            aux = Console.ReadKey(intercept: true);
+            if(aux.Key == ConsoleKey.UpArrow){
+                op--;
+            }else if(aux.Key == ConsoleKey.DownArrow){
+                op++;
+            }
+            if(op<0){
+                op = 1;
+            }else if(op>2){
+                op = 2;
+            }
+        }
+        if(aux.Key == ConsoleKey.RightArrow){
+            i++;
+        }else if(aux.Key == ConsoleKey.LeftArrow){
+            i--;
+        }
+        if(i<0){
+            i = (listaP.Count()-1);
+        }else if(i>(listaP.Count()-1)){
+            i = 0;
+        }
+        if(aux.Key == ConsoleKey.Enter){
+            if(op==1){
+                var nuevo = fp.CrearPersonaje();
+                string? name;
+                do{
+                    Console.Clear();
+                    System.Console.WriteLine("          ╔═══════════════════════╗");
+                    System.Console.WriteLine("          ║ >> CREAR PERSONAJE << ║");
+                    System.Console.WriteLine("          ╚═══════════════════════╝");
+                    System.Console.WriteLine("Ingrese el NOMBRE del Personaje: ");
+                    name = Console.ReadLine();
+                }while(name == null || name =="");
+                nuevo.Nombre = name;
+                do{
+                    Console.Clear();
+                    System.Console.WriteLine("          ╔═══════════════════════╗");
+                    System.Console.WriteLine("          ║ >> CREAR PERSONAJE << ║");
+                    System.Console.WriteLine("          ╚═══════════════════════╝");
+                    System.Console.WriteLine(">>NOMBRE: "+ nuevo.Nombre);
+                    System.Console.WriteLine("Ingrese el APODO del Personaje: ");
+                    name = Console.ReadLine();
+                    if(name == null || name ==""){
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write(new string(' ', Console.WindowWidth));
+                    }
+                }while(name ==null || name =="");
+                nuevo.Apodo = name;
+                listaP.Add(nuevo);
+                Console.Clear();
+            }else if(op ==2){
+                salida = 1;
+            }else if(op==3){
+                listaP.Remove(listaP[i]);
+                op=1;
+                i--;
+            }
+        }
+    }while(aux.Key != ConsoleKey.Escape && salida !=1);
+}
+
+// static void VaciarPersonajes(string ruta){
+//         // Verifica si el archivo existe antes de intentar borrarlo
+//         if (File.Exists(ruta))
+//         {
+//             File.Delete(ruta);
+//             //Console.WriteLine("El archivo ha sido borrado correctamente.");
+//         }
+//         else
+//         {
+//             //Console.WriteLine("El archivo no existe.");
+//         }
+// }

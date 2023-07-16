@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 public class Personaje{
     //ATRIBUTOS
     //DATOS
-    private int id;
     private string? tipo;
     private string? nombre;
     private string? apodo;
@@ -22,7 +21,6 @@ public class Personaje{
     private int energia;
 
     //Propiedades de datos
-    public int Id { get => id; set => id = value; }
     public string? Tipo { get => tipo; set => tipo = value; }
     public string? Nombre { get => nombre; set => nombre = value; }
     public string? Apodo { get => apodo; set => apodo = value; }
@@ -66,8 +64,9 @@ public class Personaje{
             aux2 = "«" + "" + " »";
         }
         
-        System.Console.WriteLine("                 ╔═══════╗");
-        System.Console.WriteLine("╔════════════════╝ID:"+ Numero(Id) +" ╚═════════════════╗");
+        // System.Console.WriteLine("                 ╔═══════╗");
+        // System.Console.WriteLine("╔════════════════╝ID:"+ Numero(Id) +" ╚═════════════════╗");
+        System.Console.WriteLine("╔══════════════════════════════════════════╗");
         System.Console.WriteLine("║" +Centrar(aux,42) + "║");
         System.Console.WriteLine("║" +Centrar(aux2,18) + "╔═══╗" + Centrar(aux3,19) + "║");
         System.Console.WriteLine("╚═════════════════╗║"+ signo +"║╔══════════════════╝");
@@ -156,10 +155,9 @@ public class FabricaDePersonaje{
         "Golpe frenético",   "Vendas"
     };
 
-    public Personaje CrearPersonaje(int id){
+    public Personaje CrearPersonaje(){
         Personaje nuevo = new Personaje();
         Random valor = new Random();
-        nuevo.Id = id;
         nuevo.Tipo = Tipos[valor.Next(0,4)];
         int anio = valor.Next(1723,2024);
         int mes = valor.Next(1,13);
