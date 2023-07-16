@@ -83,7 +83,7 @@ public class Personaje{
         System.Console.WriteLine("║" +Centrar(aux,42) + "║");
         System.Console.WriteLine("╚══════════════════════════════════════════╝");
     }
-    private string Centrar(string palabra, int espacios){
+    public string Centrar(string palabra, int espacios){
         int Blanco = (espacios - palabra.Length)/2;
         string palabraCentrada = palabra.PadLeft(palabra.Length + Blanco);
         palabraCentrada = palabraCentrada.PadRight(espacios);

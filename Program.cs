@@ -21,14 +21,6 @@ if(listaDePersonajes != null){
 }else{
     Console.WriteLine("no hay personajes");
 }
-//VaciarPersonajes("Personajes.json");
-// listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
-// if(listaDePersonajes != null){
-//     var combate = new Combates();
-//     combate.Torneo(listaDePersonajes);
-// }else{
-//     System.Console.WriteLine("no hay personajes");
-// }
 
 static void Presentacion()
 {
@@ -88,10 +80,10 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaj
         if(key.Key == ConsoleKey.Enter){
             switch (option){
                 case 1:
-                    //menu para elejir personaje y empezar partida
+                    OpJugar(listaP, fp);
                     break;
                 case 2:
-                    OpPersonajes(listaP, fp, pjson);
+                    OpPersonajes(listaP, fp);
                     break;
                 case 3:
                     salida = 3;
@@ -111,7 +103,68 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaj
     }while(salida != 3 && key.Key != ConsoleKey.Escape);
 }
 
-static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp, PersonajesJson pjson){
+static void OpJugar(List<Personaje> listaP, FabricaDePersonaje fp){
+    ConsoleKeyInfo key;
+    int option = 1, salida=0;
+    
+    do{
+        Console.WriteLine("╔══════════════════════════════════════════╗");
+        Console.WriteLine("║                                          ║");
+        Console.WriteLine("║                ╔═══════╗                 ║");
+        Console.WriteLine("║                ║ JUGAR ║                 ║");
+        Console.WriteLine("║                ╚═══════╝                 ║");
+        Console.WriteLine("║         ┌─────────────────────┐          ║");
+        if(option == 1){
+            Console.WriteLine("║        »│ .     1 vs 1      . │«         ║");
+        }else{
+            Console.WriteLine("║         │ .     1 vs 1      . │          ║");
+        }
+        Console.WriteLine("║         ├─────────────────────┤          ║");
+        if(option == 2){
+            Console.WriteLine("║        »│ .     Torneo      . │«         ║");
+        }else{
+            Console.WriteLine("║         │ .     Torneo      . │          ║");
+        }
+        Console.WriteLine("║         ├─────────────────────┤          ║");
+        if(option == 3){
+            Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
+        }else{
+            Console.WriteLine("║         │ .     VOLVER      . │          ║");
+        }
+        Console.WriteLine("║         └─────────────────────┘          ║");
+        Console.WriteLine("║                                          ║");
+        Console.WriteLine("║                                          ║");
+        Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
+        Console.WriteLine("╚══════════════════════════════════════════╝");
+        key = Console.ReadKey();
+        Console.Clear();
+         if(key.Key == ConsoleKey.Enter){
+            switch (option){
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    salida = 3;
+                    break;
+            }
+        }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
+            option++;
+        }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
+            option--;
+        }
+        if(option<1){
+            option = 1;
+        }else if(option>3){
+            option = 3;
+        }
+        Console.Clear();
+    }while(salida != 3 && key.Key != ConsoleKey.Escape);
+}
+
+static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp){
     int i = 0, prim = listaP.Count()-1;
     ConsoleKeyInfo aux;
     int op =1, salida =0;
