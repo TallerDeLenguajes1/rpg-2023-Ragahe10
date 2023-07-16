@@ -138,15 +138,20 @@ static void OpJugar(List<Personaje> listaP, FabricaDePersonaje fp){
         Console.WriteLine("╚══════════════════════════════════════════╝");
         key = Console.ReadKey();
         Console.Clear();
-         if(key.Key == ConsoleKey.Enter){
+        if(key.Key == ConsoleKey.Enter){
             switch (option){
                 case 1:
-                    //var player1 =ElegirPersonaje(List<Personaje> lp);
-                    //var oponente = Combates.Sorteo(listaP)[0];
-                    //var win =Combates.PeleaIndividual(player1, oponente);
-                    //win.MostrarPersonaje();
-                    if(player1.Nombre==win.Nombre){
-
+                    var ind = ElegirPersonaje(listaP);
+                    if(ind >0){
+                        var player1 = listaP[ind];
+                        var oponente = Combates.Sorteo(listaP)[0];
+                        var win =Combates.PeleaIndividual(player1, oponente);
+                        win.MostrarPersonaje();
+                        if(player1.Nombre==win.Nombre){
+                            Combates.EscribirMensaje("GANASTE!");
+                        }else{
+                            Combates.EscribirMensaje("PERDISTE :(");
+                        }
                     }
                     break;
                 case 2:
@@ -169,7 +174,61 @@ static void OpJugar(List<Personaje> listaP, FabricaDePersonaje fp){
         Console.Clear();
     }while(salida != 3 && key.Key != ConsoleKey.Escape);
 }
-
+static int ElegirPersonaje(List<Personaje> listaP){
+    int i = 0, prim = listaP.Count()-1;
+    ConsoleKeyInfo aux;
+    int op =1, salida =0;
+    do{
+        Console.Clear();
+        System.Console.WriteLine("          ╔══════════════════════╗");
+        System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
+        System.Console.WriteLine("          ╚══════════════════════╝");
+        listaP[i].MostrarPersonaje();
+        System.Console.WriteLine("'Usa las flechas (<- ó ->)para cambiar de personaje'");
+        System.Console.WriteLine("          ┌─────────────────────┐");
+        if(op == 1){
+        System.Console.WriteLine("         »│ .   SELECCIONAR   . │«");
+        }else{
+        System.Console.WriteLine("          │ .   SELECCIONAR   . │");
+        }
+        System.Console.WriteLine("          ├─────────────────────┤");
+        if(op == 2){
+        System.Console.WriteLine("         »│ .      SALIR      . │«");
+        }else{
+        System.Console.WriteLine("          │ .      SALIR      . │");
+        }
+        System.Console.WriteLine("          └─────────────────────┘");
+        aux = Console.ReadKey(intercept: true);
+        if(aux.Key == ConsoleKey.UpArrow){
+            op--;
+        }else if(aux.Key == ConsoleKey.DownArrow){
+            op++;
+        }
+        if(op<0){
+            op = 1;
+        }else if(op>2){
+            op = 2;
+        }
+        if(aux.Key == ConsoleKey.RightArrow){
+            i++;
+        }else if(aux.Key == ConsoleKey.LeftArrow){
+            i--;
+        }
+        if(i<0){
+            i = (listaP.Count()-1);
+        }else if(i>(listaP.Count()-1)){
+            i = 0;
+        }
+        if(aux.Key == ConsoleKey.Enter){
+            if(op==1){
+                return i;
+            }else if(op ==2){
+                salida = 1;
+            }
+        }
+    }while(aux.Key != ConsoleKey.Escape && salida !=1);
+    return -1;
+}
 static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp){
     int i = 0, prim = listaP.Count()-1;
     ConsoleKeyInfo aux;
