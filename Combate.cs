@@ -1,8 +1,8 @@
 using EspacioPersonaje;
 namespace EspacioCombates;
 
-public class Combates{
-    public List<Personaje> Sorteo(List<Personaje> listaP){
+public static class Combates{
+    public static List<Personaje> Sorteo(List<Personaje> listaP){
         var Comb = new List<Personaje>();
         var random = new Random();
         Personaje p;
@@ -13,8 +13,7 @@ public class Combates{
         }
         return Comb;
     }
-
-    public void EscribirMensaje(string message){
+    public static void EscribirMensaje(string message){
         for (int i = 0; i < message.Length; i++)
         {
             Console.Write(message[i]);
@@ -22,7 +21,7 @@ public class Combates{
         }
         Console.WriteLine();
     }
-    public Personaje PeleaIndividual(Personaje p1, Personaje p2){
+    public static Personaje PeleaIndividual(Personaje p1, Personaje p2){
         //Guardar datos iniciales{
         Personaje auxp1 = new Personaje(), auxp2 = new Personaje();
         auxp1.Nombre = p1.Nombre;
@@ -83,31 +82,31 @@ public class Combates{
         Console.Clear();
 
         int i=0;
-        while(p1.Salud >0 && p2.Salud > 0 && i<6){
+        while(auxp1.Salud >0 && auxp2.Salud > 0 && i<6){
 
-            if(p1.Velocidad>p2.Velocidad){
-                AtaqueManual(p1,p2);
-                if(p2.Salud>0){
-                    Ataque(p2,p1, true);
+            if(auxp1.Velocidad>auxp2.Velocidad){
+                AtaqueManual(auxp1,auxp2);
+                if(auxp2.Salud>0){
+                    Ataque(auxp2,auxp1, true);
                 }
             }else{
-                Ataque(p2,p1, true);
-                if(p1.Salud>0){
-                    AtaqueManual(p1,p2);
+                Ataque(auxp2,auxp1, true);
+                if(auxp1.Salud>0){
+                    AtaqueManual(auxp1,auxp2);
                 }
             }
-            Pasiva(p1);
-            Pasiva(p2);
+            Pasiva(auxp1,true);
+            Pasiva(auxp2,true);
             i++;
         }
-        if(p1.Salud<0 || p2.Salud<0){
+        if(auxp1.Salud<0 || auxp2.Salud<0){
             EscribirMensaje("- TENEMOS GANADOR!! Por un claro nocaut");
             Console.ReadKey();
             Console.Clear();
-            if(p1.Salud>0){
-                return auxp1;
+            if(auxp1.Salud>0){
+                return p1;
             }else{
-                return auxp2;
+                return p2;
             }
         }else{
             EscribirMensaje("- Sorprendentemente ambos siguen en pie...");
@@ -116,17 +115,17 @@ public class Combates{
             EscribirMensaje("- Pero los datos nos dan un solo ganador...");
             Console.ReadKey();
             Console.Clear();
-            if(PorcentajeSalud(auxp1.Salud,p1.Salud)<PorcentajeSalud(auxp2.Salud,p2.Salud)){
-                return auxp2;
+            if(PorcentajeSalud(p1.Salud,auxp1.Salud)<PorcentajeSalud(p2.Salud,auxp2.Salud)){
+                return p2;
             }else{
-                return auxp2;
+                return p1;
             }
         }
     }
-    public float PorcentajeSalud(float SaludIni, float SaludFin){
+    public static float PorcentajeSalud(float SaludIni, float SaludFin){
         return ((SaludFin*100)/SaludIni);
     }
-    public void AtaqueManual(Personaje p1, Personaje p2){
+    public static void AtaqueManual(Personaje p1, Personaje p2){
         int pos = 1, op = 0;
         ConsoleKeyInfo aux;
         float daño=0;
@@ -205,7 +204,7 @@ public class Combates{
             Console.Clear();
         }while(op!= pos);
     }
-    public void Ataque(Personaje p1, Personaje p2, bool comentarios){
+    public static void Ataque(Personaje p1, Personaje p2, bool comentarios){
         var valor = new Random();
         float daño;
         switch(valor.Next(1,11)){
@@ -259,12 +258,14 @@ public class Combates{
                 break;
          }
     }
-    public void Pasiva(Personaje p){
+    public static void Pasiva(Personaje p, bool comentarios){
         var valor = new Random();
         if(valor.Next(1,6)==1){
             if(p.Tipo!=null){
                 string tipo = p.Tipo.Split(",")[0];
-                //System.Console.WriteLine(p1.Nombre + ", pudo usar su pasiva como "+ tipo);
+                if(comentarios){
+                    EscribirMensaje(p.Nombre + ", pudo usar su pasiva como "+ tipo);
+                }
                 switch (tipo){
                     case "Humano":
                         p.Armadura += 1;
@@ -282,7 +283,7 @@ public class Combates{
             }
         }
     }
-    public Personaje CombateAuto(Personaje p1, Personaje p2){
+    public static Personaje CombateAuto(Personaje p1, Personaje p2){
         var valor = new Random();
         Personaje auxp1 = new Personaje(), auxp2 = new Personaje();
         auxp1.Nombre = p1.Nombre;
@@ -313,28 +314,38 @@ public class Combates{
         auxp2.Energia = p2.Energia;
         auxp2.Armadura = p2.Armadura;
 
-        while(p1.Salud>0 && p2.Salud>0){
-            if(p1.Velocidad>p2.Velocidad){
-                Ataque(p1,p2,false);
-                if(p2.Salud>0){
-                    Ataque(p2,p1,false);
+        int rond =1;
+        while(auxp1.Salud>0 && auxp2.Salud>0 && rond <6){
+            if(auxp1.Velocidad>auxp2.Velocidad){
+                Ataque(auxp1,auxp2,false);
+                if(auxp2.Salud>0){
+                    Ataque(auxp2,auxp1,false);
                 }
             }else{
-                Ataque(p2,p1, false);
-                if(p1.Salud>0){
-                    Ataque(p1,p2, false);
+                Ataque(auxp2,auxp1, false);
+                if(auxp1.Salud>0){
+                    Ataque(auxp1,auxp2, false);
                 }
             }
-            Pasiva(p1);
-            Pasiva(p2);
+            Pasiva(auxp1,false);
+            Pasiva(auxp2,false);
+            rond++;
         }
-        if(p1.Salud>0){
-            return auxp1;
+        if(auxp1.Salud<0 || auxp2.Salud<0){
+            if(auxp1.Salud>0){
+                return p1;
+            }else{
+                return p2;
+            }
         }else{
-            return auxp2;
+            if(PorcentajeSalud(p1.Salud,auxp1.Salud)<PorcentajeSalud(p2.Salud,auxp2.Salud)){
+                return p2;
+            }else{
+                return p1;
+            }
         }
     }
-    public float DañoProvocado(Personaje p1, float defensa){
+    public static float DañoProvocado(Personaje p1, float defensa){
         float daño, ataque;
         var efectividad = new Random();
         int efe = efectividad.Next(1,101);
@@ -343,7 +354,7 @@ public class Combates{
 
         return daño;
     }
-    public void Torneo(List<Personaje> competidores){
+    public static void Torneo(List<Personaje> competidores){
         int i =1, j;
         competidores = Sorteo(competidores);
         while(competidores.Count()>1){
@@ -363,7 +374,7 @@ public class Combates{
         System.Console.WriteLine("EL GANADOR ES ");
         competidores[0].MostrarPersonaje();
     }
-    public List<Personaje> Ganadores(List<Personaje> Competidores){
+    public static List<Personaje> Ganadores(List<Personaje> Competidores){
         var resultados = new List<Personaje>();
         while(Competidores.Count()>0){
             if(Competidores.Count()>1){

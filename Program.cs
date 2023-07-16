@@ -141,7 +141,13 @@ static void OpJugar(List<Personaje> listaP, FabricaDePersonaje fp){
          if(key.Key == ConsoleKey.Enter){
             switch (option){
                 case 1:
-                    //
+                    //var player1 =ElegirPersonaje(List<Personaje> lp);
+                    //var oponente = Combates.Sorteo(listaP)[0];
+                    //var win =Combates.PeleaIndividual(player1, oponente);
+                    //win.MostrarPersonaje();
+                    if(player1.Nombre==win.Nombre){
+
+                    }
                     break;
                 case 2:
                     //
