@@ -1,5 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using EspacioPersonaje;
+using API;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace EspacioCombates;
+
 
 public static class Combates{
     public static List<Personaje> Sorteo(List<Personaje> listaP){
@@ -17,7 +26,7 @@ public static class Combates{
         for (int i = 0; i < message.Length; i++)
         {
             Console.Write(message[i]);
-            Thread.Sleep(100); // Retardo de 100 milisegundos entre cada carácter
+            Thread.Sleep(50); // Retardo de 100 milisegundos entre cada carácter
         }
         Console.WriteLine();
     }
@@ -52,14 +61,31 @@ public static class Combates{
         auxp2.Energia = p2.Energia;
         auxp2.Armadura = p2.Armadura;
         //}
+        Conductor.CrearConductor();
+        List<string>? CondDatos = Conductor.DatosConductor();
         EscribirMensaje("- Damos la bienvenida a todos a la Arena de Mad War!!...");
         Console.ReadKey();
         Console.Clear();
         // presentacion del anfitrion
+        if(CondDatos != null){
+            if(CondDatos[1] == "male"){
+                EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
+            }else{
+                EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
+            }
+            Console.ReadKey();
+            Console.Clear();
+        }
+        //
         EscribirMensaje("- Hoy contemplaremos una pelea de 1 vs 1...");
         Console.ReadKey();
         Console.Clear();
-        EscribirMensaje("- Un combate a 5 ronda, con un solo ganador...");
+        if(CondDatos != null){
+            EscribirMensaje("En la ciudad de "+CondDatos[2]+"...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        EscribirMensaje("- Un combate a 5 rondas, con un solo ganador...");
         Console.ReadKey();
         Console.Clear();
         string aux = "- A mi izquierda tenemos a ..." + p1.Nombre.ToUpper() +", "+ p1.Apodo.ToUpper();
@@ -79,24 +105,37 @@ public static class Combates{
         Console.Clear();
         EscribirMensaje("- 1... A PELEAR!!");
         Console.ReadKey();
-        Console.Clear();
 
-        int i=0;
+        int i=1;
         while(auxp1.Salud >0 && auxp2.Salud > 0 && i<6){
-
+            Console.Clear();
+            Console.WriteLine("                ╔═════════╗                 ");
+            Console.WriteLine("                ║ RONDA "+i+" ║                 ");
+            Console.WriteLine("                ╚═════════╝                 ");
+            System.Console.WriteLine("->"+auxp1.Nombre+", "+auxp1.Apodo);
+            System.Console.WriteLine("   - TIPO:"+auxp1.Tipo);
+            System.Console.WriteLine("   - SALUD:"+auxp1.Salud);
+            System.Console.WriteLine("");
+            System.Console.WriteLine("->"+auxp2.Nombre+", "+auxp2.Apodo);
+            System.Console.WriteLine("   - TIPO:"+auxp2.Tipo);
+            System.Console.WriteLine("   - SALUD:"+auxp2.Salud);
+            Console.ReadKey();
             if(auxp1.Velocidad>auxp2.Velocidad){
                 AtaqueManual(auxp1,auxp2);
+                Console.ReadKey();
                 if(auxp2.Salud>0){
                     Ataque(auxp2,auxp1, true);
                 }
             }else{
                 Ataque(auxp2,auxp1, true);
+                Console.ReadKey();
                 if(auxp1.Salud>0){
                     AtaqueManual(auxp1,auxp2);
                 }
             }
             Pasiva(auxp1,true);
             Pasiva(auxp2,true);
+            Console.ReadKey();
             i++;
         }
         if(auxp1.Salud<0 || auxp2.Salud<0){
@@ -131,6 +170,7 @@ public static class Combates{
         float daño=0;
         string especial = p1.Centrar(p1.Especial+"(-4)",23);
         do{
+            Console.Clear();
             Console.WriteLine("╔══════════════════════════════════════════╗");
             Console.WriteLine("║              ╔══════════╗                ║");
             Console.WriteLine("║              ║ TÚ TURNO ║                ║");
@@ -160,13 +200,12 @@ public static class Combates{
             Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
             Console.WriteLine("╚══════════════════════════════════════════╝");
             aux = Console.ReadKey();
-            Console.Clear();
             if(aux.Key == ConsoleKey.Enter){
             switch (pos){
                 case 1:
                     if(p1.Energia>1){
                         p1.Energia -=2;
-                        daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad));
+                        daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad), true);
                         p2.Salud = p2.Salud - daño;
                     }
                     op = 1;
@@ -183,7 +222,7 @@ public static class Combates{
                             p1.Armadura += 2; 
                             p1.Salud += 10;
                         }else{
-                            daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad))*1.30f;
+                            daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad), true)*1.30f;
                             p2.Salud = p2.Salud - daño;
                             p1.Energia = p1.Energia - 4;
                         }
@@ -201,7 +240,6 @@ public static class Combates{
             }else if(pos>3){
                 pos = 3;
             }
-            Console.Clear();
         }while(op!= pos);
     }
     public static void Ataque(Personaje p1, Personaje p2, bool comentarios){
@@ -218,7 +256,7 @@ public static class Combates{
                     if(comentarios){
                         EscribirMensaje(p1.Nombre + ", hizo un ataque normal");
                     }
-                    daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad));
+                    daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad),comentarios);
                     p2.Salud = p2.Salud - daño;
                     p1.Energia = p1.Energia - 2;
                 }else{
@@ -246,7 +284,7 @@ public static class Combates{
                         p1.Armadura += 2; 
                         p1.Salud += 10;
                     }else{
-                        daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad))*1.30f;
+                        daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad),comentarios)*1.30f;
                         p2.Salud = p2.Salud - daño;
                         p1.Energia = p1.Energia - 4;
                     }
@@ -345,13 +383,21 @@ public static class Combates{
             }
         }
     }
-    public static float DañoProvocado(Personaje p1, float defensa){
+    public static float DañoProvocado(Personaje p1, float defensa, bool comentarios){
         float daño, ataque;
         var efectividad = new Random();
         int efe = efectividad.Next(1,101);
         ataque = p1.Fuerza * p1.Destreza * p1.Nivel;
-        daño = ((ataque * efe)- defensa)/100;
-
+        daño = ((ataque * efe)- defensa)/200;
+        if(comentarios){
+            if(efe<30){
+                EscribirMensaje("Poco efecivo");
+            }else if(efe<70){
+                EscribirMensaje("Efectivo");
+            }else{
+                EscribirMensaje("Super efectivo");
+            }
+        }
         return daño;
     }
     public static void Torneo(List<Personaje> competidores){
@@ -373,6 +419,7 @@ public static class Combates{
         }
         System.Console.WriteLine("EL GANADOR ES ");
         competidores[0].MostrarPersonaje();
+        Console.ReadKey();
     }
     public static List<Personaje> Ganadores(List<Personaje> Competidores){
         var resultados = new List<Personaje>();
@@ -387,5 +434,48 @@ public static class Combates{
             }
         }
         return resultados;
+    }
+}
+public static class Conductor{
+    public static void CrearConductor(){
+        var url = $"https://randomuser.me/api/";
+        var request = (HttpWebRequest)WebRequest.Create(url);
+        request.Method = "GET";
+        request.ContentType = "application/json";
+        request.Accept = "application/json";
+        try{
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    if (strReader == null) return;
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        //System.Console.WriteLine(responseBody);
+                        //Root Pers = JsonSerializer.Deserialize<Root>(responseBody);
+                        File.WriteAllText("Conductor.json",responseBody);
+                    }
+                }
+            }
+        }
+        catch (WebException){
+            Console.WriteLine("Problemas de acceso a la API");
+        }
+    }
+    public static List<string>? DatosConductor(){
+        Root? datos;
+        List<string>? cond = new List<string>();
+        string aux;
+        if(File.Exists("Conductor.json")){
+            string json = File.ReadAllText("Conductor.json");
+            datos = JsonSerializer.Deserialize<Root>(json);
+            aux = datos.results[0].name.first+" "+datos.results[0].name.last;
+            cond.Add(aux);
+            cond.Add(datos.results[0].gender);
+            aux = datos.results[0].location.city+", "+datos.results[0].location.country;
+            cond.Add(aux);
+        }
+        return cond;
     }
 }
