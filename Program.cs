@@ -1,7 +1,7 @@
 ﻿using EspacioPersonaje;
 using EspacioCombates;
 // See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+Console.Clear();
 Presentacion();
 
 List<Personaje>? listaDePersonajes = new List<Personaje>();
