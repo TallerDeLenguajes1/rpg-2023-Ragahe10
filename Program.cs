@@ -8,7 +8,10 @@ List<Personaje>? listaDePersonajes = new List<Personaje>();
 
 var fp = new FabricaDePersonaje();
 PersonajesJson pjson = new PersonajesJson();
-
+var restablecer = pjson.LeerPersonajes("PersonajesPrueba.json");
+if(restablecer!=null){
+    pjson.GuardarPersonajes(restablecer,"Personajes");
+}
 if(!(pjson.Existe("Personajes.json"))){
     for (int i = 1; i < 10; i++){
         listaDePersonajes.Add(fp.CrearPersonaje());
@@ -79,10 +82,10 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaj
         if(key.Key == ConsoleKey.Enter){
             switch (option){
                 case 1:
-                    OpJugar(listaP, fp);
+                    OpJugar(fp,pjson);
                     break;
                 case 2:
-                    OpPersonajes(listaP, fp);
+                    OpPersonajes(listaP, fp,pjson);
                     break;
                 case 3:
                     salida = 3;
@@ -101,81 +104,87 @@ static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaj
         Console.Clear();
     }while(salida != 3 && key.Key != ConsoleKey.Escape);
 }
-static void OpJugar(List<Personaje> listaP, FabricaDePersonaje fp){
+static void OpJugar(FabricaDePersonaje fp, PersonajesJson pjson){
     ConsoleKeyInfo key;
     int option = 1, salida=0;
-    
-    do{
-        Console.WriteLine("╔══════════════════════════════════════════╗");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║                ╔═══════╗                 ║");
-        Console.WriteLine("║                ║ JUGAR ║                 ║");
-        Console.WriteLine("║                ╚═══════╝                 ║");
-        Console.WriteLine("║         ┌─────────────────────┐          ║");
-        if(option == 1){
-            Console.WriteLine("║        »│ .     1 vs 1      . │«         ║");
-        }else{
-            Console.WriteLine("║         │ .     1 vs 1      . │          ║");
-        }
-        Console.WriteLine("║         ├─────────────────────┤          ║");
-        if(option == 2){
-            Console.WriteLine("║        »│ .     Torneo      . │«         ║");
-        }else{
-            Console.WriteLine("║         │ .     Torneo      . │          ║");
-        }
-        Console.WriteLine("║         ├─────────────────────┤          ║");
-        if(option == 3){
-            Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
-        }else{
-            Console.WriteLine("║         │ .     VOLVER      . │          ║");
-        }
-        Console.WriteLine("║         └─────────────────────┘          ║");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
-        Console.WriteLine("╚══════════════════════════════════════════╝");
-        key = Console.ReadKey();
-        Console.Clear();
-        if(key.Key == ConsoleKey.Enter){
-            switch (option){
-                case 1:
-                    var ind = ElegirPersonaje(listaP);
-                    if(ind >-1){
-                        Console.Clear();
-                        var player1 = listaP[ind];
-                        Personaje oponente;
-                        do{
-                            oponente = Combates.Sorteo(listaP)[0];
-                        }while(oponente == player1);
-                        var win =Combates.PeleaIndividual(player1, oponente);
-                        win.MostrarPersonaje();
-                        if(player1.Nombre==win.Nombre){
-                            Combates.EscribirMensaje("GANASTE!");
-                        }else{
-                            Combates.EscribirMensaje("PERDISTE :(");
-                        }
-                        Console.ReadKey();
-                    }
-                    break;
-                case 2:
-                    ModoTorneo(listaP);
-                    break;
-                case 3:
-                    salida = 3;
-                    break;
+    var listaP = pjson.LeerPersonajes("Personajes.json");
+    if(listaP != null){
+        do{
+            Console.WriteLine("╔══════════════════════════════════════════╗");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║                ╔═══════╗                 ║");
+            Console.WriteLine("║                ║ JUGAR ║                 ║");
+            Console.WriteLine("║                ╚═══════╝                 ║");
+            Console.WriteLine("║         ┌─────────────────────┐          ║");
+            if(option == 1){
+                Console.WriteLine("║        »│ .     1 vs 1      . │«         ║");
+            }else{
+                Console.WriteLine("║         │ .     1 vs 1      . │          ║");
             }
-        }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
-            option++;
-        }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
-            option--;
-        }
-        if(option<1){
-            option = 1;
-        }else if(option>3){
-            option = 3;
-        }
-        Console.Clear();
-    }while(salida != 3 && key.Key != ConsoleKey.Escape);
+            Console.WriteLine("║         ├─────────────────────┤          ║");
+            if(option == 2){
+                Console.WriteLine("║        »│ .     Torneo      . │«         ║");
+            }else{
+                Console.WriteLine("║         │ .     Torneo      . │          ║");
+            }
+            Console.WriteLine("║         ├─────────────────────┤          ║");
+            if(option == 3){
+                Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
+            }else{
+                Console.WriteLine("║         │ .     VOLVER      . │          ║");
+            }
+            Console.WriteLine("║         └─────────────────────┘          ║");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
+            Console.WriteLine("╚══════════════════════════════════════════╝");
+            key = Console.ReadKey();
+            Console.Clear();
+            if(key.Key == ConsoleKey.Enter){
+                switch (option){
+                    case 1:
+                        var ind = ElegirPersonaje(listaP);
+                        if(ind >-1){
+                            Console.Clear();
+                            var player1 = listaP[ind];
+                            Personaje oponente;
+                            do{
+                                oponente = Combates.Sorteo(listaP)[0];
+                            }while(oponente == player1);
+                            var win =Combates.PeleaIndividual(player1, oponente);
+                            win.MostrarPersonaje();
+                            if(player1.Nombre==win.Nombre){
+                                Combates.EscribirMensaje("GANASTE!");
+                            }else{
+                                Combates.EscribirMensaje("PERDISTE :(");
+                            }
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 2:
+                        ModoTorneo(listaP);
+                        break;
+                    case 3:
+                        salida = 3;
+                        break;
+                }
+            }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
+                option++;
+            }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
+                option--;
+            }
+            if(option<1){
+                option = 1;
+            }else if(option>3){
+                option = 3;
+            }
+            Console.Clear();
+            listaP = pjson.LeerPersonajes("Personajes.json");
+            if(listaP ==null){
+                salida = 3;
+            }
+        }while(salida != 3 && key.Key != ConsoleKey.Escape);
+    }
 }
 static int ElegirPersonaje(List<Personaje> listaP){
     int i = 0, prim = listaP.Count()-1;
@@ -234,73 +243,77 @@ static int ElegirPersonaje(List<Personaje> listaP){
 }
 
 static void ModoTorneo(List<Personaje> lp){
-    Combates.EscribirMensaje("- Bienvenido a la Arena de 'Mad War'...");
-    Console.ReadKey();
-    Console.Clear();
-    Conductor.CrearConductor();
-    List<string>? CondDatos = Conductor.DatosConductor();
-    // presentacion del anfitrion
-    if(CondDatos != null){
-        if(CondDatos[1] == "male"){
-            Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
-        }else{
-            Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
-        }
+    if(lp!=null){
+        Conductor.CrearConductor();
+        List<string>? CondDatos = Conductor.DatosConductor();
+        Combates.EscribirMensaje("- Bienvenido a la Arena de 'Mad War'...");
         Console.ReadKey();
         Console.Clear();
-    }
-    Combates.EscribirMensaje("- El modo torneo sirve para ver en condiciones azarosar quien es mejor...");
-    Console.ReadKey();
-    Console.Clear();
-    ConsoleKeyInfo key;
-    int option = 1, salida=0;
-    
-    do{
-        Console.WriteLine("╔══════════════════════════════════════════╗");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║                ╔════════╗                ║");
-        Console.WriteLine("║                ║ TORNEO ║                ║");
-        Console.WriteLine("║                ╚════════╝                ║");
-        Console.WriteLine("║         ┌─────────────────────┐          ║");
-        if(option == 1){
-            Console.WriteLine("║        »│ .     Entrar      . │«         ║");
-        }else{
-            Console.WriteLine("║         │ .     Entrar      . │          ║");
-        }
-        Console.WriteLine("║         ├─────────────────────┤          ║");
-        if(option == 2){
-            Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
-        }else{
-            Console.WriteLine("║         │ .     VOLVER      . │          ║");
-        }
-        Console.WriteLine("║         └─────────────────────┘          ║");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║                                          ║");
-        Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
-        Console.WriteLine("╚══════════════════════════════════════════╝");
-        key = Console.ReadKey();
-        Console.Clear();
-        if(key.Key == ConsoleKey.Enter){
-            if(option==1){
-                Combates.Torneo(lp);
+        // presentacion del anfitrion
+        if(CondDatos != null){
+            if(CondDatos[1] == "male"){
+                Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
             }else{
-                salida = 2;
+                Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
             }
-        }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
-            option++;
-        }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
-            option--;
+            Console.ReadKey();
+            Console.Clear();
+            Combates.EscribirMensaje("- El estadio está en "+CondDatos[2]+"...");
+            Console.ReadKey();
+            Console.Clear();
         }
-        if(option<1){
-            option = 1;
-        }else if(option>2){
-            option = 2;
-        }
+        Combates.EscribirMensaje("- El modo torneo sirve para ver, en condiciones azarosas, quien es mejor...");
+        Console.ReadKey();
         Console.Clear();
-    }while(salida != 2 && key.Key != ConsoleKey.Escape);
+        ConsoleKeyInfo key;
+        int option = 1, salida=0;
+        
+        do{
+            Console.WriteLine("╔══════════════════════════════════════════╗");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║                ╔════════╗                ║");
+            Console.WriteLine("║                ║ TORNEO ║                ║");
+            Console.WriteLine("║                ╚════════╝                ║");
+            Console.WriteLine("║         ┌─────────────────────┐          ║");
+            if(option == 1){
+                Console.WriteLine("║        »│ .     Entrar      . │«         ║");
+            }else{
+                Console.WriteLine("║         │ .     Entrar      . │          ║");
+            }
+            Console.WriteLine("║         ├─────────────────────┤          ║");
+            if(option == 2){
+                Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
+            }else{
+                Console.WriteLine("║         │ .     VOLVER      . │          ║");
+            }
+            Console.WriteLine("║         └─────────────────────┘          ║");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║                                          ║");
+            Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
+            Console.WriteLine("╚══════════════════════════════════════════╝");
+            key = Console.ReadKey();
+            Console.Clear();
+            if(key.Key == ConsoleKey.Enter){
+                if(option==1){
+                    Combates.Torneo(lp);
+                }
+                salida = 2;
+            }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
+                option++;
+            }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
+                option--;
+            }
+            if(option<1){
+                option = 1;
+            }else if(option>2){
+                option = 2;
+            }
+            Console.Clear();
+        }while(salida != 2 && key.Key != ConsoleKey.Escape);
+    }
 }
 
-static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp){
+static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp, PersonajesJson pjson){
     int i = 0, prim = listaP.Count()-1;
     ConsoleKeyInfo aux;
     int op =1, salida =0;
@@ -337,7 +350,7 @@ static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp){
             }else if(aux.Key == ConsoleKey.DownArrow){
                 op++;
             }
-            if(op<0){
+            if(op<1){
                 op = 1;
             }else if(op>3){
                 op = 3;
@@ -392,13 +405,10 @@ static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp){
                     System.Console.WriteLine(">>NOMBRE: "+ nuevo.Nombre);
                     System.Console.WriteLine("Ingrese el APODO del Personaje: ");
                     name = Console.ReadLine();
-                    if(name == null || name ==""){
-                        Console.SetCursorPosition(0, Console.CursorTop - 1);
-                        Console.Write(new string(' ', Console.WindowWidth));
-                    }
                 }while(name ==null || name =="");
                 nuevo.Apodo = name;
                 listaP.Add(nuevo);
+                pjson.GuardarPersonajes(listaP, "Personajes");
                 Console.Clear();
             }else if(op ==2){
                 salida = 1;

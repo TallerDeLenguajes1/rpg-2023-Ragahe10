@@ -404,7 +404,11 @@ public static class Combates{
         int i =1, j;
         competidores = Sorteo(competidores);
         while(competidores.Count()>1){
-            System.Console.WriteLine(i+"° Combates");
+            if(competidores.Count() ==2){
+                System.Console.WriteLine("COMBATE FINAL");
+            }else{
+                System.Console.WriteLine(i+"° Combates");
+            }
             i++;
             j=1;
             foreach (var item in competidores)
@@ -415,6 +419,7 @@ public static class Combates{
                 }
                 j++;
             }
+            Console.ReadKey();
             competidores = Ganadores(competidores);
         }
         System.Console.WriteLine("EL GANADOR ES ");
