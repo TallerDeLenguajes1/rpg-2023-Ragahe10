@@ -26,7 +26,7 @@ public static class Combates{
         for (int i = 0; i < message.Length; i++)
         {
             Console.Write(message[i]);
-            Thread.Sleep(50); // Retardo de 100 milisegundos entre cada carácter
+            Thread.Sleep(25); // Retardo de 25 milisegundos entre cada carácter
         }
         Console.WriteLine();
     }
