@@ -20,7 +20,7 @@ if(!(pjson.Existe("Personajes.json"))){
 }
 listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
 if(listaDePersonajes != null){
-    Interfas.Menu(pjson, listaDePersonajes, fp);
+    Interfas.Menu(pjson, fp);
 }else{
     Console.WriteLine("no hay personajes");
 }

@@ -21,7 +21,7 @@ public static class Interfas{
         Console.ReadKey();
         Console.Clear();
     }
-    public static void Menu(PersonajesJson pjson, List<Personaje> listaP, FabricaDePersonaje fp){
+    public static void Menu(PersonajesJson pjson, FabricaDePersonaje fp){
         ConsoleKeyInfo key;
         int option = 1, salida=0;
         
@@ -62,7 +62,7 @@ public static class Interfas{
                         OpJugar(fp,pjson);
                         break;
                     case 2:
-                        OpPersonajes(listaP, fp,pjson);
+                        OpPersonajes(fp,pjson);
                         break;
                     case 3:
                         salida = 3;
@@ -83,8 +83,16 @@ public static class Interfas{
     }
     public static void OpJugar(FabricaDePersonaje fp, PersonajesJson pjson){
         ConsoleKeyInfo key;
+        List<Personaje>? listaP = new List<Personaje>();
+        if(pjson.Existe("Personaje.json")){
+            listaP = pjson.LeerPersonajes("Personajes.json");
+        }else{
+            for (int j = 1; j < 10; j++){
+                listaP.Add(fp.CrearPersonaje());
+            }
+            pjson.GuardarPersonajes(listaP, "Personajes");
+        }
         int option = 1, salida=0;
-        var listaP = pjson.LeerPersonajes("Personajes.json");
         if(listaP != null){
             do{
                 Console.WriteLine("╔══════════════════════════════════════════╗");
@@ -292,7 +300,16 @@ public static class Interfas{
         }
     }
 
-    public static void OpPersonajes(List<Personaje> listaP, FabricaDePersonaje fp, PersonajesJson pjson){
+    public static void OpPersonajes(FabricaDePersonaje fp, PersonajesJson pjson){
+        List<Personaje>? listaP = new List<Personaje>();
+        if(pjson.Existe("Personaje.json")){
+            listaP = pjson.LeerPersonajes("Personajes.json");
+        }else{
+            for (int j = 1; j < 10; j++){
+                listaP.Add(fp.CrearPersonaje());
+            }
+            pjson.GuardarPersonajes(listaP, "Personajes");
+        }
         int i = 0, prim = listaP.Count()-1;
         ConsoleKeyInfo aux;
         int op =1, salida =0;
