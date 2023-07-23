@@ -84,7 +84,7 @@ public static class Interfas{
     public static void OpJugar(FabricaDePersonaje fp, PersonajesJson pjson){
         ConsoleKeyInfo key;
         List<Personaje>? listaP = new List<Personaje>();
-        if(pjson.Existe("Personaje.json")){
+        if(pjson.Existe("Personajes.json")){
             listaP = pjson.LeerPersonajes("Personajes.json");
         }else{
             for (int j = 1; j < 10; j++){
@@ -229,7 +229,7 @@ public static class Interfas{
         return -1;
     }
 
-    public static void ModoTorneo(List<Personaje> lp){
+    public static void ModoTorneo(List<Personaje>? lp){
         if(lp!=null){
             Conductor.CrearConductor();
             List<string>? CondDatos = Conductor.DatosConductor();
@@ -302,7 +302,7 @@ public static class Interfas{
 
     public static void OpPersonajes(FabricaDePersonaje fp, PersonajesJson pjson){
         List<Personaje>? listaP = new List<Personaje>();
-        if(pjson.Existe("Personaje.json")){
+        if(pjson.Existe("Personajes.json")){
             listaP = pjson.LeerPersonajes("Personajes.json");
         }else{
             for (int j = 1; j < 10; j++){
