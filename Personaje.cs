@@ -64,24 +64,26 @@ public class Personaje{
             aux2 = "«" + "" + " »";
         }
         
-        // System.Console.WriteLine("                 ╔═══════╗");
-        // System.Console.WriteLine("╔════════════════╝ID:"+ Numero(Id) +" ╚═════════════════╗");
-        System.Console.WriteLine("╔══════════════════════════════════════════╗");
-        System.Console.WriteLine("║" +Centrar(aux,42) + "║");
-        System.Console.WriteLine("║" +Centrar(aux2,18) + "╔═══╗" + Centrar(aux3,19) + "║");
-        System.Console.WriteLine("╚═════════════════╗║"+ signo +"║╔══════════════════╝");
-        System.Console.WriteLine("╔═════════════════╝╚═══╝╚══════════════════╗");
-        System.Console.WriteLine("║             »CARACTERISTICAS«            ║");
-        System.Console.WriteLine("║               ├>Vida: "+ Numero(Salud) +"                ║");
-        System.Console.WriteLine("║               ├>Dest: "+ Numero(Destreza) +"                ║");
-        System.Console.WriteLine("║               ├>Frza: "+ Numero(Fuerza) +"                ║");
-        System.Console.WriteLine("║               ├>Velc: "+ Numero(Velocidad) +"                ║");
-        System.Console.WriteLine("║               ├>Armd: "+ Numero(Armadura) +"                ║");
-        System.Console.WriteLine("║               └>Edad: "+ Numero(Edad) +"                ║");
-        System.Console.WriteLine("║                »ESPECIAL«                ║");
+        System.Console.WriteLine("║┌──────────────────────────────────────────┐║");
+        System.Console.WriteLine("║│" +Centrar(aux,42) + "│║");
+        System.Console.WriteLine("║├──────────────────────────────────────────┤║");
+        System.Console.WriteLine("║│" + Centrar("Fecha Nac: "+ FechaDeNacimiento.ToShortDateString(),42)+"│║");
+        System.Console.WriteLine("║│" + Centrar("Edad: "+ Numero(Edad),42)+"│║");
+        System.Console.WriteLine("║│" +Centrar(aux2,18) + "┌───┐" + Centrar(aux3,19) + "│║");
+        System.Console.WriteLine("║└─────────────────┐│"+ signo +"│┌──────────────────┘║");
+        System.Console.WriteLine("║┌─────────────────┘└───┘└──────────────────┐║");
+        System.Console.WriteLine("║│             »CARACTERISTICAS«            │║");
+        System.Console.WriteLine("║├──────────────────────────────────────────┤║");
+        System.Console.WriteLine("║│              ♥ Vida ♥: "+ Numero(Salud) +"               │║");
+        System.Console.WriteLine("║│              ♣ Dest ♣: "+ Numero(Destreza) +"               │║");
+        System.Console.WriteLine("║│              ♠ Frza ♠: "+ Numero(Fuerza) +"               │║");
+        System.Console.WriteLine("║│              ♦ Velc ♦: "+ Numero(Velocidad) +"               │║");
+        System.Console.WriteLine("║│              ◘ Armd ◘: "+ Numero(Armadura) +"               │║");
+        System.Console.WriteLine("║│                »ESPECIAL«                │║");
         aux ="< " + Especial + " >";
-        System.Console.WriteLine("║" +Centrar(aux,42) + "║");
-        System.Console.WriteLine("╚══════════════════════════════════════════╝");
+        System.Console.WriteLine("║│" +Centrar(aux,42) + "│║");
+        System.Console.WriteLine("║└──────────────────────────────────────────┘║");
+        System.Console.WriteLine("╚════════════════════════════════════════════╝");
     }
     public string Centrar(string palabra, int espacios){
         int Blanco = (espacios - palabra.Length)/2;

@@ -33,19 +33,19 @@ public static class Interfas{
             Console.WriteLine("║                 ╚══════╝                 ║");
             Console.WriteLine("║         ┌─────────────────────┐          ║");
             if(option == 1){
-                Console.WriteLine("║        »│ .      Jugar      . │«         ║");
+                Console.WriteLine("║        ►│ .      Jugar      . │◄         ║");
             }else{
                 Console.WriteLine("║         │ .      Jugar      . │          ║");
             }
             Console.WriteLine("║         ├─────────────────────┤          ║");
             if(option == 2){
-                Console.WriteLine("║        »│ .    Personajes   . │«         ║");
+                Console.WriteLine("║        ►│ .    Personajes   . │◄         ║");
             }else{
                 Console.WriteLine("║         │ .    Personajes   . │          ║");
             }
             Console.WriteLine("║         ├─────────────────────┤          ║");
             if(option == 3){
-                Console.WriteLine("║        »│ .      SALIR      . │«         ║");
+                Console.WriteLine("║        ►│ .      SALIR      . │◄         ║");
             }else{
                 Console.WriteLine("║         │ .      SALIR      . │          ║");
             }
@@ -68,9 +68,9 @@ public static class Interfas{
                         salida = 3;
                         break;
                 }
-            }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
+            }else if(key.Key == ConsoleKey.DownArrow){
                 option++;
-            }else if(key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.UpArrow){
+            }else if(key.Key == ConsoleKey.UpArrow){
                 option--;
             }
             if(option<1){
@@ -94,19 +94,19 @@ public static class Interfas{
                 Console.WriteLine("║                ╚═══════╝                 ║");
                 Console.WriteLine("║         ┌─────────────────────┐          ║");
                 if(option == 1){
-                    Console.WriteLine("║        »│ .     1 vs 1      . │«         ║");
+                    Console.WriteLine("║        ►│ . Partida  Rápida . │◄         ║");
                 }else{
-                    Console.WriteLine("║         │ .     1 vs 1      . │          ║");
+                    Console.WriteLine("║         │ . Partida  Rápida . │          ║");
                 }
                 Console.WriteLine("║         ├─────────────────────┤          ║");
                 if(option == 2){
-                    Console.WriteLine("║        »│ .     Torneo      . │«         ║");
+                    Console.WriteLine("║        ►│ .     Torneo      . │◄         ║");
                 }else{
                     Console.WriteLine("║         │ .     Torneo      . │          ║");
                 }
                 Console.WriteLine("║         ├─────────────────────┤          ║");
                 if(option == 3){
-                    Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
+                    Console.WriteLine("║        ►│ .     VOLVER      . │◄         ║");
                 }else{
                     Console.WriteLine("║         │ .     VOLVER      . │          ║");
                 }
@@ -169,20 +169,22 @@ public static class Interfas{
         int op =1, salida =0;
         do{
             Console.Clear();
-            System.Console.WriteLine("          ╔══════════════════════╗");
-            System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
-            System.Console.WriteLine("          ╚══════════════════════╝");
+            Console.Clear();
+            System.Console.WriteLine("╔════════════════════════════════════════════╗");
+            System.Console.WriteLine("║          ╔══════════════════════╗          ║");
+            System.Console.WriteLine("║          ║  >>> PERSONAJES <<<  ║          ║");
+            System.Console.WriteLine("║          ╚══════════════════════╝          ║");
             listaP[i].MostrarPersonaje();
             System.Console.WriteLine("'Usa las flechas (<- ó ->)para cambiar de personaje'");
             System.Console.WriteLine("          ┌─────────────────────┐");
             if(op == 1){
-            System.Console.WriteLine("         »│ .   SELECCIONAR   . │«");
+            System.Console.WriteLine("         ►│ .   SELECCIONAR   . │◄");
             }else{
             System.Console.WriteLine("          │ .   SELECCIONAR   . │");
             }
             System.Console.WriteLine("          ├─────────────────────┤");
             if(op == 2){
-            System.Console.WriteLine("         »│ .      SALIR      . │«");
+            System.Console.WriteLine("         ►│ .      SALIR      . │◄");
             }else{
             System.Console.WriteLine("          │ .      SALIR      . │");
             }
@@ -193,7 +195,7 @@ public static class Interfas{
             }else if(aux.Key == ConsoleKey.DownArrow){
                 op++;
             }
-            if(op<0){
+            if(op<1){
                 op = 1;
             }else if(op>2){
                 op = 2;
@@ -253,13 +255,13 @@ public static class Interfas{
                 Console.WriteLine("║                ╚════════╝                ║");
                 Console.WriteLine("║         ┌─────────────────────┐          ║");
                 if(option == 1){
-                    Console.WriteLine("║        »│ .     Entrar      . │«         ║");
+                    Console.WriteLine("║        ►│ .     Entrar      . │◄         ║");
                 }else{
                     Console.WriteLine("║         │ .     Entrar      . │          ║");
                 }
                 Console.WriteLine("║         ├─────────────────────┤          ║");
                 if(option == 2){
-                    Console.WriteLine("║        »│ .     VOLVER      . │«         ║");
+                    Console.WriteLine("║        ►│ .     VOLVER      . │◄         ║");
                 }else{
                     Console.WriteLine("║         │ .     VOLVER      . │          ║");
                 }
@@ -296,27 +298,29 @@ public static class Interfas{
         int op =1, salida =0;
         do{
             Console.Clear();
-            System.Console.WriteLine("          ╔══════════════════════╗");
-            System.Console.WriteLine("          ║  >>> PERSONAJES <<<  ║");
-            System.Console.WriteLine("          ╚══════════════════════╝");
+            Console.Clear();
+            System.Console.WriteLine("╔════════════════════════════════════════════╗");
+            System.Console.WriteLine("║          ╔══════════════════════╗          ║");
+            System.Console.WriteLine("║          ║  >>> PERSONAJES <<<  ║          ║");
+            System.Console.WriteLine("║          ╚══════════════════════╝          ║");
             listaP[i].MostrarPersonaje();
             System.Console.WriteLine("'Usa las flechas (<- ó ->)para cambiar de personaje'");
             System.Console.WriteLine("          ┌─────────────────────┐");
             if(op == 1){
-            System.Console.WriteLine("         »│ . Crear Personaje . │«");
+            System.Console.WriteLine("         ►│ . Crear Personaje . │◄");
             }else{
             System.Console.WriteLine("          │ . Crear Personaje . │");
             }
             System.Console.WriteLine("          ├─────────────────────┤");
             if(i>prim){
                 if(op == 2){
-                System.Console.WriteLine("         »│ .      SALIR      . │«");
+                System.Console.WriteLine("         ►│ .      SALIR      . │◄");
                 }else{
                 System.Console.WriteLine("          │ .      SALIR      . │");
                 }
                 System.Console.WriteLine("          ├─────────────────────┤");
                 if(op == 3){
-                System.Console.WriteLine("         »│ .      BORRAR     . │«");
+                System.Console.WriteLine("         ►│ .      BORRAR     . │◄");
                 }else{
                 System.Console.WriteLine("          │ .      BORRAR     . │");
                 }
@@ -334,7 +338,7 @@ public static class Interfas{
                 }
             }else{
                 if(op == 2){
-                System.Console.WriteLine("         »│ .      SALIR      . │«");
+                System.Console.WriteLine("         ►│ .      SALIR      . │◄");
                 }else{
                 System.Console.WriteLine("          │ .      SALIR      . │");
                 }
@@ -345,7 +349,7 @@ public static class Interfas{
                 }else if(aux.Key == ConsoleKey.DownArrow){
                     op++;
                 }
-                if(op<0){
+                if(op<1){
                     op = 1;
                 }else if(op>2){
                     op = 2;

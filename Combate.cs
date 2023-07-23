@@ -138,6 +138,7 @@ public static class Combates{
             Console.ReadKey();
             i++;
         }
+        Console.Clear();
         if(auxp1.Salud<0 || auxp2.Salud<0){
             EscribirMensaje("- TENEMOS GANADOR!! Por un claro nocaut");
             Console.ReadKey();
