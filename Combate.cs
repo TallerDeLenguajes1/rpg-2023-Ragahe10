@@ -6,9 +6,8 @@ using EspacioPersonaje;
 using API;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+using InterfasVisual;
 namespace EspacioCombates;
-
 
 public static class Combates{
     public static List<Personaje> Sorteo(List<Personaje> listaP){
@@ -22,15 +21,8 @@ public static class Combates{
         }
         return Comb;
     }
-    public static void EscribirMensaje(string message){
-        for (int i = 0; i < message.Length; i++)
-        {
-            Console.Write(message[i]);
-            Thread.Sleep(25); // Retardo de 25 milisegundos entre cada carácter
-        }
-        Console.WriteLine();
-    }
-    public static Personaje PeleaIndividual(Personaje p1, Personaje p2){
+    
+    public static Personaje PeleaIndividual(Personaje p1, Personaje p2, bool comentarios){
         //Guardar datos iniciales{
         Personaje auxp1 = new Personaje(), auxp2 = new Personaje();
         auxp1.Nombre = p1.Nombre;
@@ -61,68 +53,63 @@ public static class Combates{
         auxp2.Energia = p2.Energia;
         auxp2.Armadura = p2.Armadura;
         //}
-        Conductor.CrearConductor();
-        List<string>? CondDatos = Conductor.DatosConductor();
-        EscribirMensaje("- Damos la bienvenida a todos a la Arena de Mad War!!...");
+        List<string>? CondDatos = null;
+        if(comentarios){
+            Conductor.CrearConductor();
+            CondDatos = Conductor.DatosConductor();
+        }
+        Interfas.EscribirMensaje("- Damos la bienvenida a todos a la Arena de Mad War!!...");
         Console.ReadKey();
         Console.Clear();
         // presentacion del anfitrion
-        if(CondDatos != null){
-            if(CondDatos[1] == "male"){
-                EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
-            }else{
-                EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
+        if(comentarios){
+            if(CondDatos != null){
+                if(CondDatos[1] == "male"){
+                    Interfas.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
+                }else{
+                    Interfas.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
+                }
+                Console.ReadKey();
+                Console.Clear();
             }
+            //
+            Interfas.EscribirMensaje("- Hoy contemplaremos una pelea de 1 vs 1...");
             Console.ReadKey();
             Console.Clear();
+            if(CondDatos != null){
+                Interfas.EscribirMensaje("En la ciudad de "+CondDatos[2]+"...");
+                Console.ReadKey();
+                Console.Clear();
+            }
         }
-        //
-        EscribirMensaje("- Hoy contemplaremos una pelea de 1 vs 1...");
-        Console.ReadKey();
-        Console.Clear();
-        if(CondDatos != null){
-            EscribirMensaje("En la ciudad de "+CondDatos[2]+"...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-        EscribirMensaje("- Un combate a 5 rondas, con un solo ganador...");
+        Interfas.EscribirMensaje("- Un combate a 5 rondas, con un solo ganador...");
         Console.ReadKey();
         Console.Clear();
         string aux = "- A mi izquierda tenemos a ..." + p1.Nombre.ToUpper() +", "+ p1.Apodo.ToUpper();
-        EscribirMensaje(aux);
+        Interfas.EscribirMensaje(aux);
         aux = "- Del otro lado está ..." + p2.Nombre.ToUpper() +", "+ p2.Apodo.ToUpper();
-        EscribirMensaje(aux);
+        Interfas.EscribirMensaje(aux);
         Console.ReadKey();
         Console.Clear();
-        EscribirMensaje("- AHORA... Demos inicio al combate en ...");
+        Interfas.EscribirMensaje("- AHORA... Demos inicio al combate en ...");
         Console.ReadKey();
         Console.Clear();
-        EscribirMensaje("- 3...");
+        Interfas.EscribirMensaje("- 3...");
         Console.ReadKey();
         Console.Clear();
-        EscribirMensaje("- 2...");
+        Interfas.EscribirMensaje("- 2...");
         Console.ReadKey();
         Console.Clear();
-        EscribirMensaje("- 1... A PELEAR!!");
+        Interfas.EscribirMensaje("- 1... A PELEAR!!");
         Console.ReadKey();
 
         int i=1;
         while(auxp1.Salud >0 && auxp2.Salud > 0 && i<6){
             Console.Clear();
-            Console.WriteLine("                ╔═════════╗                 ");
-            Console.WriteLine("                ║ RONDA "+i+" ║                 ");
-            Console.WriteLine("                ╚═════════╝                 ");
-            System.Console.WriteLine("->"+auxp1.Nombre+", "+auxp1.Apodo);
-            System.Console.WriteLine("   - TIPO:"+auxp1.Tipo);
-            System.Console.WriteLine("   - SALUD:"+auxp1.Salud);
-            System.Console.WriteLine("");
-            System.Console.WriteLine("->"+auxp2.Nombre+", "+auxp2.Apodo);
-            System.Console.WriteLine("   - TIPO:"+auxp2.Tipo);
-            System.Console.WriteLine("   - SALUD:"+auxp2.Salud);
+            Interfas.Ronda(auxp1, auxp2, i);
             Console.ReadKey();
             if(auxp1.Velocidad>auxp2.Velocidad){
                 AtaqueManual(auxp1,auxp2);
-                Console.ReadKey();
                 if(auxp2.Salud>0){
                     Ataque(auxp2,auxp1, true);
                 }
@@ -140,7 +127,7 @@ public static class Combates{
         }
         Console.Clear();
         if(auxp1.Salud<0 || auxp2.Salud<0){
-            EscribirMensaje("- TENEMOS GANADOR!! Por un claro nocaut");
+            Interfas.EscribirMensaje("- TENEMOS GANADOR!! Por un claro nocaut");
             Console.ReadKey();
             Console.Clear();
             if(auxp1.Salud>0){
@@ -149,10 +136,10 @@ public static class Combates{
                 return p2;
             }
         }else{
-            EscribirMensaje("- Sorprendentemente ambos siguen en pie...");
+            Interfas.EscribirMensaje("- Sorprendentemente ambos siguen en pie...");
             Console.ReadKey();
             Console.Clear();
-            EscribirMensaje("- Pero los datos nos dan un solo ganador...");
+            Interfas.EscribirMensaje("- Pero los datos nos dan un solo ganador...");
             Console.ReadKey();
             Console.Clear();
             if(PorcentajeSalud(p1.Salud,auxp1.Salud)<PorcentajeSalud(p2.Salud,auxp2.Salud)){
@@ -172,34 +159,7 @@ public static class Combates{
         string especial = p1.Centrar(p1.Especial+"(-4)",23);
         do{
             Console.Clear();
-            Console.WriteLine("╔══════════════════════════════════════════╗");
-            Console.WriteLine("║              ╔══════════╗                ║");
-            Console.WriteLine("║              ║ TÚ TURNO ║                ║");
-            Console.WriteLine("║              ╚══════════╝                ║");
-            Console.WriteLine("║"+p1.Centrar("ENERGÍA: "+p1.Energia,42)+"║");
-            Console.WriteLine("║      ┌───────────────────────────┐       ║");
-            if(pos == 1){
-                Console.WriteLine("║     »│ .      Atacar(-2)       . │«      ║");
-            }else{
-                Console.WriteLine("║      │ .      Atacar(-2)       . │       ║");
-            }
-            Console.WriteLine("║      ├───────────────────────────┤       ║");
-            if(pos == 2){
-                Console.WriteLine("║     »│ .     Defender(+2)      . │«      ║");
-            }else{
-                Console.WriteLine("║      │ .     Defender(+2)      . │       ║");
-            }
-            Console.WriteLine("║      ├───────────────────────────┤       ║");
-            if(pos == 3){
-                Console.WriteLine("║     »│ ."+especial+". │«      ║");
-            }else{
-                Console.WriteLine("║      │ ."+especial+". │       ║");
-            }
-            Console.WriteLine("║      └───────────────────────────┘       ║");
-            Console.WriteLine("║                                          ║");
-            Console.WriteLine("║                                          ║");
-            Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
-            Console.WriteLine("╚══════════════════════════════════════════╝");
+            Interfas.Turno(pos,p1,especial);
             aux = Console.ReadKey();
             if(aux.Key == ConsoleKey.Enter){
             switch (pos){
@@ -255,7 +215,7 @@ public static class Combates{
             case 6:
                 if(p1.Energia>=2){
                     if(comentarios){
-                        EscribirMensaje(p1.Nombre + ", hizo un ataque normal");
+                        Interfas.EscribirMensaje(p1.Nombre + ", hizo un ataque normal");
                     }
                     daño = DañoProvocado(p1,(p2.Armadura*p2.Velocidad),comentarios);
                     p2.Salud = p2.Salud - daño;
@@ -303,7 +263,7 @@ public static class Combates{
             if(p.Tipo!=null){
                 string tipo = p.Tipo.Split(",")[0];
                 if(comentarios){
-                    EscribirMensaje(p.Nombre + ", pudo usar su pasiva como "+ tipo);
+                    Interfas.EscribirMensaje(p.Nombre + ", pudo usar su pasiva como "+ tipo);
                 }
                 switch (tipo){
                     case "Humano":
@@ -392,46 +352,73 @@ public static class Combates{
         daño = ((ataque * efe)- defensa)/200;
         if(comentarios){
             if(efe<30){
-                EscribirMensaje("Poco efecivo");
+                Interfas.EscribirMensaje("Poco efecivo");
             }else if(efe<70){
-                EscribirMensaje("Efectivo");
+                Interfas.EscribirMensaje("Efectivo");
             }else{
-                EscribirMensaje("Super efectivo");
+                Interfas.EscribirMensaje("Super efectivo");
             }
         }
         return daño;
     }
-    public static void Torneo(List<Personaje> competidores){
+    public static void Torneo(List<Personaje> competidores,Personaje seleccion){
         int i =1, j;
         competidores = Sorteo(competidores);
+        List<string> Etapas = new List<string>();
         while(competidores.Count()>1){
-            if(competidores.Count() ==2){
-                System.Console.WriteLine("COMBATE FINAL");
+            if(competidores.Count() == 2){
+                Etapas.Add("                ╔═══════════╗");
+                Etapas.Add("                ║   FINAL   ║");
+                Etapas.Add("                ╚═══════════╝");
             }else{
-                System.Console.WriteLine(i+"° Combates");
+                Etapas.Add("                ╔═══════════╗");
+                Etapas.Add("                ║ "+i+"° ETAPA  ║");
+                Etapas.Add("                ╚═══════════╝");
             }
             i++;
             j=1;
-            foreach (var item in competidores)
-            {
-                System.Console.WriteLine(" "+j+"- "+item.Nombre+", "+item.Apodo+"("+item.Tipo+")");
+            foreach (var item in competidores){
+                Etapas.Add(" "+j+"- "+item.Nombre+", "+item.Apodo+"("+item.Tipo+")");
                 if(j%2 == 0){
-                    System.Console.WriteLine(" ");
+                    Etapas.Add(" ");
                 }
                 j++;
             }
+            Console.Clear();
+            foreach(var item in Etapas){
+                Interfas.EscribirMensaje(item);
+            }
+            System.Console.WriteLine("                 >>Clik Enter<<");
             Console.ReadKey();
-            competidores = Ganadores(competidores);
+            competidores = Ganadores(competidores,seleccion);
         }
-        System.Console.WriteLine("EL GANADOR ES ");
+        Console.WriteLine("╔════════════════════════════════════════════╗");
+        Console.WriteLine("║                ╔═════════╗                 ║");
+        Console.WriteLine("║                ║ GANADOR ║                 ║");
+        Console.WriteLine("║                ╚═════════╝                 ║");
         competidores[0].MostrarPersonaje();
         Console.ReadKey();
+        Console.Clear();
     }
-    public static List<Personaje> Ganadores(List<Personaje> Competidores){
+    public static List<Personaje> Ganadores(List<Personaje> Competidores, Personaje seleccion){
         var resultados = new List<Personaje>();
         while(Competidores.Count()>0){
             if(Competidores.Count()>1){
-                resultados.Add(CombateAuto(Competidores[0],Competidores[1]));
+                if(seleccion == Competidores[0] || seleccion == Competidores[1]){
+                    Console.Clear();
+                    Interfas.EscribirMensaje("- Entrando al combate ...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    if(seleccion == Competidores[0]){
+                        resultados.Add(PeleaIndividual(Competidores[0],Competidores[1], false));
+                    }else{
+                        resultados.Add(PeleaIndividual(Competidores[1],Competidores[0], false));
+                    }
+                    Interfas.Result(resultados.Last());
+                    Console.ReadKey();
+                }else{
+                    resultados.Add(CombateAuto(Competidores[0],Competidores[1]));
+                }
                 Competidores.Remove(Competidores[0]);
                 Competidores.Remove(Competidores[0]);
             }else{

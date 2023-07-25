@@ -1,5 +1,5 @@
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 namespace API;
+// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Coordinates
     {
         public string latitude { get; set; }

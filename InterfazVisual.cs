@@ -2,6 +2,14 @@ using EspacioPersonaje;
 using EspacioCombates;
 namespace InterfasVisual;
 public static class Interfas{
+    public static void EscribirMensaje(string message){
+        for (int i = 0; i < message.Length; i++)
+        {
+            Console.Write(message[i]);
+            Thread.Sleep(25); // Retardo de 25 milisegundos entre cada carácter
+        }
+        Console.WriteLine();
+    }
     public static void Presentacion()
     {
         Console.WriteLine("┌─────────────────────────────────────────────────────────────────────────────────────────┐");
@@ -136,13 +144,8 @@ public static class Interfas{
                                 do{
                                     oponente = Combates.Sorteo(listaP)[0];
                                 }while(oponente == player1);
-                                var win =Combates.PeleaIndividual(player1, oponente);
-                                win.MostrarPersonaje();
-                                if(player1.Nombre==win.Nombre){
-                                    Combates.EscribirMensaje("GANASTE!");
-                                }else{
-                                    Combates.EscribirMensaje("PERDISTE :(");
-                                }
+                                var win =Combates.PeleaIndividual(player1, oponente, true);
+                                Result(win);
                                 Console.ReadKey();
                             }
                             break;
@@ -171,6 +174,14 @@ public static class Interfas{
             }while(salida != 3 && key.Key != ConsoleKey.Escape);
         }
     }
+    public static void Result(Personaje win){
+        Console.WriteLine("╔════════════════════════════════════════════╗");
+        Console.WriteLine("║                ╔═════════╗                 ║");
+        Console.WriteLine("║                ║ GANADOR ║                 ║");
+        Console.WriteLine("║                ╚═════════╝                 ║");
+        win.MostrarPersonaje();
+        
+    }
     static int ElegirPersonaje(List<Personaje> listaP){
         int i = 0, prim = listaP.Count()-1;
         ConsoleKeyInfo aux;
@@ -180,7 +191,7 @@ public static class Interfas{
             Console.Clear();
             System.Console.WriteLine("╔════════════════════════════════════════════╗");
             System.Console.WriteLine("║          ╔══════════════════════╗          ║");
-            System.Console.WriteLine("║          ║  >>> PERSONAJES <<<  ║          ║");
+            System.Console.WriteLine("║          ║   ELEGIR PERSONAJE   ║          ║");
             System.Console.WriteLine("║          ╚══════════════════════╝          ║");
             listaP[i].MostrarPersonaje();
             System.Console.WriteLine("'Usa las flechas (<- ó ->)para cambiar de personaje'");
@@ -233,24 +244,27 @@ public static class Interfas{
         if(lp!=null){
             Conductor.CrearConductor();
             List<string>? CondDatos = Conductor.DatosConductor();
-            Combates.EscribirMensaje("- Bienvenido a la Arena de 'Mad War'...");
+            EscribirMensaje("- Bienvenido a la Arena de 'Mad War'...");
             Console.ReadKey();
             Console.Clear();
             // presentacion del anfitrion
             if(CondDatos != null){
                 if(CondDatos[1] == "male"){
-                    Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
+                    EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductor esta noche...");
                 }else{
-                    Combates.EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
+                    EscribirMensaje("- Mi nombre es "+CondDatos[0]+" y seré su conductora esta noche ");
                 }
                 Console.ReadKey();
                 Console.Clear();
-                Combates.EscribirMensaje("- El estadio está en "+CondDatos[2]+"...");
-                Console.ReadKey();
-                Console.Clear();
+                if(CondDatos[2]!=null){
+                    EscribirMensaje("- El estadio está en "+CondDatos[2]+"...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
-            Combates.EscribirMensaje("- El modo torneo sirve para ver, en condiciones azarosas, quien es mejor...");
+            EscribirMensaje("- El modo torneo sirve para ver, en condiciones azarosas, quien es mejor...");
             Console.ReadKey();
+            var seleccion = lp[ElegirPersonaje(lp)];
             Console.Clear();
             ConsoleKeyInfo key;
             int option = 1, salida=0;
@@ -282,7 +296,7 @@ public static class Interfas{
                 Console.Clear();
                 if(key.Key == ConsoleKey.Enter){
                     if(option==1){
-                        Combates.Torneo(lp);
+                        Combates.Torneo(lp, seleccion);
                     }
                     salida = 2;
                 }else if(key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.DownArrow){
@@ -419,4 +433,46 @@ public static class Interfas{
         }while(aux.Key != ConsoleKey.Escape && salida !=1);
     }
 
+    public static void Turno(int pos, Personaje p1, string especial){
+        Console.WriteLine("╔══════════════════════════════════════════╗");
+        Console.WriteLine("║              ╔══════════╗                ║");
+        Console.WriteLine("║              ║ TÚ TURNO ║                ║");
+        Console.WriteLine("║              ╚══════════╝                ║");
+        Console.WriteLine("║"+p1.Centrar("ENERGÍA: "+p1.Energia,42)+"║");
+        Console.WriteLine("║      ┌───────────────────────────┐       ║");
+        if(pos == 1){
+            Console.WriteLine("║     »│ .      Atacar(-2)       . │«      ║");
+        }else{
+            Console.WriteLine("║      │ .      Atacar(-2)       . │       ║");
+        }
+        Console.WriteLine("║      ├───────────────────────────┤       ║");
+        if(pos == 2){
+            Console.WriteLine("║     »│ .     Defender(+2)      . │«      ║");
+        }else{
+            Console.WriteLine("║      │ .     Defender(+2)      . │       ║");
+        }
+        Console.WriteLine("║      ├───────────────────────────┤       ║");
+        if(pos == 3){
+            Console.WriteLine("║     »│ ."+especial+". │«      ║");
+        }else{
+            Console.WriteLine("║      │ ."+especial+". │       ║");
+        }
+        Console.WriteLine("║      └───────────────────────────┘       ║");
+        Console.WriteLine("║                                          ║");
+        Console.WriteLine("║                                          ║");
+        Console.WriteLine("║         ©Copyright El PricuQuicu         ║");
+        Console.WriteLine("╚══════════════════════════════════════════╝");
+    }
+    public static void Ronda(Personaje p1, Personaje p2, int i){
+        Console.WriteLine("                ╔═════════╗                 ");
+        Console.WriteLine("                ║ RONDA "+i+" ║                 ");
+        Console.WriteLine("                ╚═════════╝                 ");
+        System.Console.WriteLine("->"+p1.Nombre+", "+p1.Apodo);
+        System.Console.WriteLine("   - TIPO:"+p1.Tipo);
+        System.Console.WriteLine("   - SALUD:"+p1.Salud);
+        System.Console.WriteLine("");
+        System.Console.WriteLine("->"+p2.Nombre+", "+p2.Apodo);
+        System.Console.WriteLine("   - TIPO:"+p2.Tipo);
+        System.Console.WriteLine("   - SALUD:"+p2.Salud);
+    }
 }
