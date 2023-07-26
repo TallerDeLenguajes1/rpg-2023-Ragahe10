@@ -2,8 +2,8 @@
 using InterfasVisual;
 // See https://aka.ms/new-console-template for more information
 Console.Clear();
+Conductor.CrearConductor();
 Interfas.Presentacion();
-
 List<Personaje>? listaDePersonajes = new List<Personaje>();
 
 var fp = new FabricaDePersonaje();

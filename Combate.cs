@@ -1,11 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using EspacioPersonaje;
-using API;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using InterfasVisual;
 namespace EspacioCombates;
 
@@ -55,7 +48,6 @@ public static class Combates{
         //}
         List<string>? CondDatos = null;
         if(comentarios){
-            Conductor.CrearConductor();
             CondDatos = Conductor.DatosConductor();
         }
         Interfas.EscribirMensaje("- Damos la bienvenida a todos a la Arena de Mad War!!...");
@@ -156,7 +148,7 @@ public static class Combates{
         int pos = 1, op = 0;
         ConsoleKeyInfo aux;
         float daño=0;
-        string especial = p1.Centrar(p1.Especial+"(-4)",23);
+        string especial = Interfas.Centrar(p1.Especial+"(-4)",23);
         do{
             Console.Clear();
             Interfas.Turno(pos,p1,especial);
@@ -363,6 +355,7 @@ public static class Combates{
     }
     public static void Torneo(List<Personaje> competidores,Personaje seleccion){
         int i =1, j;
+        Console.Clear();
         competidores = Sorteo(competidores);
         List<string> Etapas = new List<string>();
         while(competidores.Count()>1){
@@ -378,25 +371,33 @@ public static class Combates{
             i++;
             j=1;
             foreach (var item in competidores){
-                Etapas.Add(" "+j+"- "+item.Nombre+", "+item.Apodo+"("+item.Tipo+")");
-                if(j%2 == 0){
-                    Etapas.Add(" ");
-                }
+                Interfas.Versus(Etapas, item, j);
                 j++;
             }
             Console.Clear();
             foreach(var item in Etapas){
-                Interfas.EscribirMensaje(item);
+                Console.WriteLine(item);
             }
             System.Console.WriteLine("                 >>Clik Enter<<");
             Console.ReadKey();
             competidores = Ganadores(competidores,seleccion);
+            if(competidores.Count()>1){
+                System.Console.WriteLine("       ╔════════════════════════╗");
+                System.Console.WriteLine("       ║   GANADORES ETAPA"+i+"   ║");
+                System.Console.WriteLine("       ╚════════════════════════╝");
+                j=1;
+                foreach (var item in competidores){
+                    System.Console.WriteLine("PELEA NÚMERO "+j);
+                    item.PresentacionCorta();
+                    j++;
+                }
+                System.Console.WriteLine("                 >>Clik Enter<<");
+                Console.ReadKey();
+                Console.Clear();
+                Console.Clear();
+            }
         }
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                ╔═════════╗                 ║");
-        Console.WriteLine("║                ║ GANADOR ║                 ║");
-        Console.WriteLine("║                ╚═════════╝                 ║");
-        competidores[0].MostrarPersonaje();
+        Interfas.Result(competidores[0]);
         Console.ReadKey();
         Console.Clear();
     }
@@ -427,48 +428,5 @@ public static class Combates{
             }
         }
         return resultados;
-    }
-}
-public static class Conductor{
-    public static void CrearConductor(){
-        var url = $"https://randomuser.me/api/";
-        var request = (HttpWebRequest)WebRequest.Create(url);
-        request.Method = "GET";
-        request.ContentType = "application/json";
-        request.Accept = "application/json";
-        try{
-            using (WebResponse response = request.GetResponse())
-            {
-                using (Stream strReader = response.GetResponseStream())
-                {
-                    if (strReader == null) return;
-                    using (StreamReader objReader = new StreamReader(strReader))
-                    {
-                        string responseBody = objReader.ReadToEnd();
-                        //System.Console.WriteLine(responseBody);
-                        //Root Pers = JsonSerializer.Deserialize<Root>(responseBody);
-                        File.WriteAllText("Conductor.json",responseBody);
-                    }
-                }
-            }
-        }
-        catch (WebException){
-            Console.WriteLine("Problemas de acceso a la API");
-        }
-    }
-    public static List<string>? DatosConductor(){
-        Root? datos;
-        List<string>? cond = new List<string>();
-        string aux;
-        if(File.Exists("Conductor.json")){
-            string json = File.ReadAllText("Conductor.json");
-            datos = JsonSerializer.Deserialize<Root>(json);
-            aux = datos.results[0].name.first+" "+datos.results[0].name.last;
-            cond.Add(aux);
-            cond.Add(datos.results[0].gender);
-            aux = datos.results[0].location.city+", "+datos.results[0].location.country;
-            cond.Add(aux);
-        }
-        return cond;
     }
 }

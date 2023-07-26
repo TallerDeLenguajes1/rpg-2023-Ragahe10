@@ -1,7 +1,7 @@
 namespace EspacioPersonaje;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+using InterfasVisual;
 public class Personaje{
     //ATRIBUTOS
     //DATOS
@@ -65,11 +65,11 @@ public class Personaje{
         }
         
         System.Console.WriteLine("║┌──────────────────────────────────────────┐║");
-        System.Console.WriteLine("║│" +Centrar(aux,42) + "│║");
+        System.Console.WriteLine("║│" +Interfas.Centrar(aux,42) + "│║");
         System.Console.WriteLine("║├──────────────────────────────────────────┤║");
-        System.Console.WriteLine("║│" + Centrar("Fecha Nac: "+ FechaDeNacimiento.ToShortDateString(),42)+"│║");
-        System.Console.WriteLine("║│" + Centrar("Edad: "+ Numero(Edad),42)+"│║");
-        System.Console.WriteLine("║│" +Centrar(aux2,18) + "┌───┐" + Centrar(aux3,19) + "│║");
+        System.Console.WriteLine("║│" + Interfas.Centrar("Fecha Nac: "+ FechaDeNacimiento.ToShortDateString(),42)+"│║");
+        System.Console.WriteLine("║│" + Interfas.Centrar("Edad: "+ Numero(Edad),42)+"│║");
+        System.Console.WriteLine("║│" +Interfas.Centrar(aux2,18) + "┌───┐" + Interfas.Centrar(aux3,19) + "│║");
         System.Console.WriteLine("║└─────────────────┐│"+ signo +"│┌──────────────────┘║");
         System.Console.WriteLine("║┌─────────────────┘└───┘└──────────────────┐║");
         System.Console.WriteLine("║│             »CARACTERISTICAS«            │║");
@@ -81,15 +81,16 @@ public class Personaje{
         System.Console.WriteLine("║│              ◘ Armd ◘: "+ Numero(Armadura) +"               │║");
         System.Console.WriteLine("║│                »ESPECIAL«                │║");
         aux ="< " + Especial + " >";
-        System.Console.WriteLine("║│" +Centrar(aux,42) + "│║");
+        System.Console.WriteLine("║│" +Interfas.Centrar(aux,42) + "│║");
         System.Console.WriteLine("║└──────────────────────────────────────────┘║");
         System.Console.WriteLine("╚════════════════════════════════════════════╝");
     }
-    public string Centrar(string palabra, int espacios){
-        int Blanco = (espacios - palabra.Length)/2;
-        string palabraCentrada = palabra.PadLeft(palabra.Length + Blanco);
-        palabraCentrada = palabraCentrada.PadRight(espacios);
-        return palabraCentrada;
+    
+    public void PresentacionCorta(){
+        Console.WriteLine("┌────────────────────────────────────────┐");
+        Console.WriteLine("│"+Interfas.Centrar(Nombre+", "+Apodo,40)+"│");
+        Console.WriteLine("│"+Interfas.Centrar(Tipo,40)+"│");
+        Console.WriteLine("└────────────────────────────────────────┘");
     }
     private string Numero(float num){
         string aux;

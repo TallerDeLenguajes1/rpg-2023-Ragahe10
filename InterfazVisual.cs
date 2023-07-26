@@ -1,14 +1,32 @@
+using System.Net;
 using EspacioPersonaje;
 using EspacioCombates;
+using API;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace InterfasVisual;
 public static class Interfas{
     public static void EscribirMensaje(string message){
         for (int i = 0; i < message.Length; i++)
         {
             Console.Write(message[i]);
-            Thread.Sleep(25); // Retardo de 25 milisegundos entre cada carácter
+            Thread.Sleep(10); // Retardo de 10 milisegundos entre cada carácter
         }
         Console.WriteLine();
+    }
+
+    public static string Centrar(string palabra, int espacios){
+        int Blanco = (espacios - palabra.Length)/2;
+        string palabraCentrada = palabra.PadLeft(palabra.Length + Blanco);
+        palabraCentrada = palabraCentrada.PadRight(espacios);
+        return palabraCentrada;
+    }
+    public static string EspaciadoDer(string frase, int espacios){
+        espacios = espacios - frase.Count();
+        for (int i = 0; i < espacios; i++){
+            frase = frase + " ";
+        }
+        return frase;
     }
     public static void Presentacion()
     {
@@ -242,7 +260,6 @@ public static class Interfas{
 
     public static void ModoTorneo(List<Personaje>? lp){
         if(lp!=null){
-            Conductor.CrearConductor();
             List<string>? CondDatos = Conductor.DatosConductor();
             EscribirMensaje("- Bienvenido a la Arena de 'Mad War'...");
             Console.ReadKey();
@@ -438,7 +455,7 @@ public static class Interfas{
         Console.WriteLine("║              ╔══════════╗                ║");
         Console.WriteLine("║              ║ TÚ TURNO ║                ║");
         Console.WriteLine("║              ╚══════════╝                ║");
-        Console.WriteLine("║"+p1.Centrar("ENERGÍA: "+p1.Energia,42)+"║");
+        Console.WriteLine("║"+Interfas.Centrar("ENERGÍA: "+p1.Energia,42)+"║");
         Console.WriteLine("║      ┌───────────────────────────┐       ║");
         if(pos == 1){
             Console.WriteLine("║     »│ .      Atacar(-2)       . │«      ║");
@@ -464,15 +481,83 @@ public static class Interfas{
         Console.WriteLine("╚══════════════════════════════════════════╝");
     }
     public static void Ronda(Personaje p1, Personaje p2, int i){
-        Console.WriteLine("                ╔═════════╗                 ");
-        Console.WriteLine("                ║ RONDA "+i+" ║                 ");
-        Console.WriteLine("                ╚═════════╝                 ");
-        System.Console.WriteLine("->"+p1.Nombre+", "+p1.Apodo);
-        System.Console.WriteLine("   - TIPO:"+p1.Tipo);
-        System.Console.WriteLine("   - SALUD:"+p1.Salud);
-        System.Console.WriteLine("");
-        System.Console.WriteLine("->"+p2.Nombre+", "+p2.Apodo);
-        System.Console.WriteLine("   - TIPO:"+p2.Tipo);
-        System.Console.WriteLine("   - SALUD:"+p2.Salud);
+        Console.WriteLine("                  ╔═════════╗                 ");
+        Console.WriteLine("                  ║ RONDA "+i+" ║                 ");
+        Console.WriteLine("                  ╚═════════╝                 ");
+        Console.WriteLine("   ┌────────────────────────────────────────┐");
+        Console.WriteLine("   │"+Centrar(p1.Nombre+", "+p1.Apodo,40)+"│");
+        Console.WriteLine("   ├────────────────────────────────────────┤");
+        Console.WriteLine("   │  • TIPO : "+EspaciadoDer(p1.Tipo,29)+"│");
+        Console.WriteLine("   │  • SALUD: "+EspaciadoDer(p1.Salud.ToString(),29)+"│");
+        Console.WriteLine("   │  • ENERG: "+EspaciadoDer(p1.Energia.ToString(),29)+"│");
+        Console.WriteLine("   └────────────────────────────────────────┘");
+        Console.WriteLine("");
+        Console.WriteLine("   ┌────────────────────────────────────────┐");
+        Console.WriteLine("   │"+Centrar(p2.Nombre+", "+p2.Apodo,40)+"│");
+        Console.WriteLine("   ├────────────────────────────────────────┤");
+        Console.WriteLine("   │  • TIPO : "+EspaciadoDer(p2.Tipo,29)+"│");
+        Console.WriteLine("   │  • SALUD: "+EspaciadoDer(p2.Salud.ToString(),29)+"│");
+        Console.WriteLine("   │  • ENERG: "+EspaciadoDer(p2.Energia.ToString(),29)+"│");
+        Console.WriteLine("   └────────────────────────────────────────┘");
+    }
+
+    public static void Versus(List<string>Etapas, Personaje personaje, int ind){
+        if(ind%2 == 0){
+            Etapas.Add((ind/2)+"                           ► VS ◄                           "+(ind/2));
+            Etapas.Add("                   ┌────────────────────────────────────────┐");
+            Etapas.Add("                   │"+Centrar(personaje.Nombre+", "+personaje.Apodo,40)+"│");
+            Etapas.Add("                   │"+Centrar(personaje.Tipo,40)+"│");
+            Etapas.Add("                   └────────────────────────────────────────┘");
+            Etapas.Add("----------------------------------------");
+        }else{
+            Etapas.Add("┌────────────────────────────────────────┐");
+            Etapas.Add("│"+Centrar(personaje.Nombre+", "+personaje.Apodo,40)+"│");
+            Etapas.Add("│"+Centrar(personaje.Tipo,40)+"│");
+            Etapas.Add("└────────────────────────────────────────┘");
+        }
+    }
+}
+
+public static class Conductor{
+    public static void CrearConductor(){
+        var url = $"https://randomuser.me/api/";
+        var request = (HttpWebRequest)WebRequest.Create(url);
+        request.Method = "GET";
+        request.ContentType = "application/json";
+        request.Accept = "application/json";
+        try{
+            using (WebResponse response = request.GetResponse())
+            {
+                using (Stream strReader = response.GetResponseStream())
+                {
+                    if (strReader == null) return;
+                    using (StreamReader objReader = new StreamReader(strReader))
+                    {
+                        string responseBody = objReader.ReadToEnd();
+                        //System.Console.WriteLine(responseBody);
+                        //Root Pers = JsonSerializer.Deserialize<Root>(responseBody);
+                        File.WriteAllText("Conductor.json",responseBody);
+                    }
+                }
+            }
+        }
+        catch (WebException){
+            Console.WriteLine("Problemas de acceso a la API");
+        }
+    }
+    public static List<string>? DatosConductor(){
+        Root? datos;
+        List<string>? cond = new List<string>();
+        string aux;
+        if(File.Exists("Conductor.json")){
+            string json = File.ReadAllText("Conductor.json");
+            datos = JsonSerializer.Deserialize<Root>(json);
+            aux = datos.results[0].name.first+" "+datos.results[0].name.last;
+            cond.Add(aux);
+            cond.Add(datos.results[0].gender);
+            aux = datos.results[0].location.city+", "+datos.results[0].location.country;
+            cond.Add(aux);
+        }
+        return cond;
     }
 }
