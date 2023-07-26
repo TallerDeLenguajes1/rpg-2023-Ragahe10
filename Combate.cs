@@ -359,6 +359,7 @@ public static class Combates{
         competidores = Sorteo(competidores);
         List<string> Etapas = new List<string>();
         while(competidores.Count()>1){
+            Etapas.Clear();
             if(competidores.Count() == 2){
                 Etapas.Add("                ╔═══════════╗");
                 Etapas.Add("                ║   FINAL   ║");
@@ -368,34 +369,39 @@ public static class Combates{
                 Etapas.Add("                ║ "+i+"° ETAPA  ║");
                 Etapas.Add("                ╚═══════════╝");
             }
-            i++;
             j=1;
             foreach (var item in competidores){
                 Interfas.Versus(Etapas, item, j);
                 j++;
             }
-            Console.Clear();
+            Console.Write("\x1b[2J\x1b[H");
             foreach(var item in Etapas){
                 Console.WriteLine(item);
+                if(item[0]=='-'){
+                    Console.ReadKey();
+                }
             }
             System.Console.WriteLine("                 >>Clik Enter<<");
             Console.ReadKey();
             competidores = Ganadores(competidores,seleccion);
             if(competidores.Count()>1){
+                Console.Write("\x1b[2J\x1b[H");
                 System.Console.WriteLine("       ╔════════════════════════╗");
-                System.Console.WriteLine("       ║   GANADORES ETAPA"+i+"   ║");
+                System.Console.WriteLine("       ║   GANADORES ETAPA "+i+"    ║");
                 System.Console.WriteLine("       ╚════════════════════════╝");
                 j=1;
                 foreach (var item in competidores){
                     System.Console.WriteLine("PELEA NÚMERO "+j);
                     item.PresentacionCorta();
                     j++;
+                    Console.ReadKey();
                 }
                 System.Console.WriteLine("                 >>Clik Enter<<");
                 Console.ReadKey();
                 Console.Clear();
                 Console.Clear();
             }
+            i++;
         }
         Interfas.Result(competidores[0]);
         Console.ReadKey();
@@ -415,8 +421,6 @@ public static class Combates{
                     }else{
                         resultados.Add(PeleaIndividual(Competidores[1],Competidores[0], false));
                     }
-                    Interfas.Result(resultados.Last());
-                    Console.ReadKey();
                 }else{
                     resultados.Add(CombateAuto(Competidores[0],Competidores[1]));
                 }
