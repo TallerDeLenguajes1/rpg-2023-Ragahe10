@@ -358,7 +358,7 @@ public static class Combates{
         }
         return daño;
     }
-        public static void Torneo(List<Personaje> competidores,Personaje seleccion){
+    public static void Torneo(List<Personaje> competidores,Personaje seleccion){
         int i =1;
         Console.Clear();
         competidores = Sorteo(competidores);

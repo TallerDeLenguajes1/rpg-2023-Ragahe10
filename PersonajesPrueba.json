@@ -59,7 +59,7 @@
         "Velocidad":7,
         "Destreza":3,
         "Fuerza":7,
-        "Nivel":6,
+        "Nivel":2,
         "Armadura":7,
         "Salud":100,
         "Energia":10
@@ -89,9 +89,9 @@
         "Edad":288,
         "Especial":"Flecha anest\u00E9sica",
         "Velocidad":11,
-        "Destreza":3,
-        "Fuerza":4,
-        "Nivel":6,
+        "Destreza":4,
+        "Fuerza":5,
+        "Nivel":1,
         "Armadura":6,
         "Salud":90,
         "Energia":10
@@ -139,7 +139,7 @@
         "Velocidad":2,
         "Destreza":2,
         "Fuerza":6,
-        "Nivel":1,
+        "Nivel":2,
         "Armadura":4,
         "Salud":155,
         "Energia":10
@@ -171,7 +171,7 @@
         "Velocidad":6,
         "Destreza":2,
         "Fuerza":7,
-        "Nivel":5,
+        "Nivel":4,
         "Armadura":1,
         "Salud":150,
         "Energia":10
@@ -203,7 +203,7 @@
         "Velocidad":4,
         "Destreza":2,
         "Fuerza":8,
-        "Nivel":6,
+        "Nivel":2,
         "Armadura":9,
         "Salud":105,
         "Energia":10
