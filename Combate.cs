@@ -77,12 +77,17 @@ public static class Combates{
         Interfas.EscribirMensaje("- Un combate a 5 rondas, con un solo ganador...");
         Console.ReadKey();
         Console.Clear();
-        string aux = "- A mi izquierda tenemos a ..." + p1.Nombre.ToUpper() +", "+ p1.Apodo.ToUpper();
-        Interfas.EscribirMensaje(aux);
-        aux = "- Del otro lado está ..." + p2.Nombre.ToUpper() +", "+ p2.Apodo.ToUpper();
-        Interfas.EscribirMensaje(aux);
-        Console.ReadKey();
-        Console.Clear();
+        string aux;
+        if(p1.Nombre!=null && p1.Apodo!=null){
+            aux = "- A mi izquierda tenemos a ..." + p1.Nombre.ToUpper() +", "+ p1.Apodo.ToUpper();
+            Interfas.EscribirMensaje(aux);
+        }
+        if(p2.Nombre!=null && p2.Apodo!=null){
+            aux = "- Del otro lado está ..." + p2.Nombre.ToUpper() +", "+ p2.Apodo.ToUpper();
+            Interfas.EscribirMensaje(aux);
+            Console.ReadKey();
+            Console.Clear();
+        }
         Interfas.EscribirMensaje("- AHORA... Demos inicio al combate en ...");
         Console.ReadKey();
         Console.Clear();
@@ -353,64 +358,35 @@ public static class Combates{
         }
         return daño;
     }
-    public static void Torneo(List<Personaje> competidores,Personaje seleccion){
-        int i =1, j;
+        public static void Torneo(List<Personaje> competidores,Personaje seleccion){
+        int i =1;
         Console.Clear();
         competidores = Sorteo(competidores);
         List<string> Etapas = new List<string>();
         while(competidores.Count()>1){
-            Etapas.Clear();
-            if(competidores.Count() == 2){
-                Etapas.Add("                ╔═══════════╗");
-                Etapas.Add("                ║   FINAL   ║");
-                Etapas.Add("                ╚═══════════╝");
-            }else{
-                Etapas.Add("                ╔═══════════╗");
-                Etapas.Add("                ║ "+i+"° ETAPA  ║");
-                Etapas.Add("                ╚═══════════╝");
-            }
-            j=1;
-            foreach (var item in competidores){
-                Interfas.Versus(Etapas, item, j);
-                j++;
-            }
-            Console.Write("\x1b[2J\x1b[H");
-            foreach(var item in Etapas){
-                Console.WriteLine(item);
-                if(item[0]=='-'){
-                    Console.ReadKey();
-                }
-            }
-            System.Console.WriteLine("                 >>Clik Enter<<");
-            Console.ReadKey();
-            competidores = Ganadores(competidores,seleccion);
-            if(competidores.Count()>1){
-                Console.Write("\x1b[2J\x1b[H");
-                System.Console.WriteLine("       ╔════════════════════════╗");
-                System.Console.WriteLine("       ║   GANADORES ETAPA "+i+"    ║");
-                System.Console.WriteLine("       ╚════════════════════════╝");
-                j=1;
-                foreach (var item in competidores){
-                    System.Console.WriteLine("PELEA NÚMERO "+j);
-                    item.PresentacionCorta();
-                    j++;
-                    Console.ReadKey();
-                }
-                System.Console.WriteLine("                 >>Clik Enter<<");
-                Console.ReadKey();
-                Console.Clear();
-                Console.Clear();
-            }
+            competidores = GanadoresNuevo(competidores,seleccion,i);
             i++;
         }
         Interfas.Result(competidores[0]);
         Console.ReadKey();
         Console.Clear();
     }
-    public static List<Personaje> Ganadores(List<Personaje> Competidores, Personaje seleccion){
+    public static List<Personaje> GanadoresNuevo(List<Personaje> Competidores, Personaje seleccion, int i){
         var resultados = new List<Personaje>();
+        int cant = Competidores.Count();
         while(Competidores.Count()>0){
+            Console.Clear();
             if(Competidores.Count()>1){
+                if(cant == 2){
+                    Console.WriteLine("                ╔═══════════╗");
+                    Console.WriteLine("                ║   FINAL   ║");
+                    Console.WriteLine("                ╚═══════════╝");
+                }else{
+                    Console.WriteLine("                ╔═══════════╗");
+                    Console.WriteLine("                ║ "+i+"° ETAPA  ║");
+                    Console.WriteLine("                ╚═══════════╝");
+                }
+                Interfas.Versus(Competidores[0],Competidores[1]);
                 if(seleccion == Competidores[0] || seleccion == Competidores[1]){
                     Console.Clear();
                     Interfas.EscribirMensaje("- Entrando al combate ...");
@@ -421,12 +397,25 @@ public static class Combates{
                     }else{
                         resultados.Add(PeleaIndividual(Competidores[1],Competidores[0], false));
                     }
+                    Interfas.Ganador();
+                    resultados.Last().PresentacionCorta();
+                    Console.WriteLine("                 >>Clik Enter<<");
+                    Console.ReadKey();
                 }else{
                     resultados.Add(CombateAuto(Competidores[0],Competidores[1]));
+                    Interfas.Ganador();
+                    resultados.Last().PresentacionCorta();
+                    Console.WriteLine("                 >>Clik Enter<<");
+                    Console.ReadKey();
                 }
                 Competidores.Remove(Competidores[0]);
                 Competidores.Remove(Competidores[0]);
             }else{
+                Console.WriteLine("                ╔═══════════╗");
+                Console.WriteLine("                ║ "+i+"° ETAPA  ║");
+                Console.WriteLine("                ╚═══════════╝");
+                Interfas.Versus(Competidores[0], null);
+                Interfas.EscribirMensaje("         SIN CONTRINCANTE...");
                 resultados.Add(Competidores[0]);
                 Competidores.Remove(Competidores[0]);
             }

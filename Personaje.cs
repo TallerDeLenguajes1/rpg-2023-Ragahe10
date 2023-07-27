@@ -87,10 +87,12 @@ public class Personaje{
     }
     
     public void PresentacionCorta(){
-        Console.WriteLine("┌────────────────────────────────────────┐");
-        Console.WriteLine("│"+Interfas.Centrar(Nombre+", "+Apodo,40)+"│");
-        Console.WriteLine("│"+Interfas.Centrar(Tipo,40)+"│");
-        Console.WriteLine("└────────────────────────────────────────┘");
+        if(Tipo!=null){
+            Console.WriteLine("┌────────────────────────────────────────┐");
+            Console.WriteLine("│"+Interfas.Centrar(Nombre+", "+Apodo,40)+"│");
+            Console.WriteLine("│"+Interfas.Centrar(Tipo,40)+"│");
+            Console.WriteLine("└────────────────────────────────────────┘");
+        }
     }
     private string Numero(float num){
         string aux;
