@@ -346,7 +346,7 @@ public static class Combates{
         var efectividad = new Random();
         int efe = efectividad.Next(1,101);
         ataque = p1.Fuerza * p1.Destreza * p1.Nivel;
-        daño = ((ataque * efe)- defensa)/200;
+        daño = ((ataque * efe)- defensa)/300;
         if(comentarios){
             if(efe<30){
                 Interfas.EscribirMensaje("Poco efecivo");
@@ -399,12 +399,14 @@ public static class Combates{
                     }
                     Interfas.Ganador();
                     resultados.Last().PresentacionCorta();
+                    resultados.Last().Nivel+=1;
                     Console.WriteLine("                 >>Clik Enter<<");
                     Console.ReadKey();
                 }else{
                     resultados.Add(CombateAuto(Competidores[0],Competidores[1]));
                     Interfas.Ganador();
                     resultados.Last().PresentacionCorta();
+                    resultados.Last().Nivel+=1;
                     Console.WriteLine("                 >>Clik Enter<<");
                     Console.ReadKey();
                 }

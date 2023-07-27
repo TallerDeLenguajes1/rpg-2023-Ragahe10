@@ -249,7 +249,7 @@ public class FabricaDePersonaje{
         nuevo.Tipo = nuevo.Tipo + ", " + rol; 
         //Incremento los campos segun el nivel
         // float campo = 0.25f;
-        nuevo.Nivel = valor.Next(1,7);
+        nuevo.Nivel = valor.Next(1,4);
         // campo = ((nuevo.Nivel)-1)*campo;
         // nuevo.Velocidad += campo;
         // nuevo.Destreza += campo;
