@@ -1,0 +1,15 @@
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\bin\Debug\net9.0\rpg-2023-Ragahe10.exe
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\bin\Debug\net9.0\rpg-2023-Ragahe10.deps.json
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\bin\Debug\net9.0\rpg-2023-Ragahe10.runtimeconfig.json
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\bin\Debug\net9.0\rpg-2023-Ragahe10.dll
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\bin\Debug\net9.0\rpg-2023-Ragahe10.pdb
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.AssemblyInfoInputs.cache
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.AssemblyInfo.cs
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.csproj.CoreCompileInputs.cache
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.sourcelink.json
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.dll
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\refint\rpg-2023-Ragahe10.dll
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.pdb
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\rpg-2023-Ragahe10.genruntimeconfig.cache
+C:\Users\Ramiro\Desktop\ramiro\PU\2doAño\TallerDeLenguajes\Taller-repo\Taller1\rpg-2023-Ragahe10\obj\Debug\net9.0\ref\rpg-2023-Ragahe10.dll

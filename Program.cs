@@ -19,8 +19,11 @@ if(!(pjson.Existe("Personajes.json"))){
     pjson.GuardarPersonajes(listaDePersonajes, "Personajes");
 }
 listaDePersonajes = pjson.LeerPersonajes("Personajes.json");
-if(listaDePersonajes != null){
+if (listaDePersonajes != null)
+{
     Interfas.Menu(pjson, fp);
-}else{
+}
+else
+{
     Console.WriteLine("no hay personajes");
 }
